@@ -49,7 +49,11 @@
       padding: 34px 24px 34px;
       border: 2px solid var(--ink);
       border-radius: 30px 24px 32px 23px;
-      background: linear-gradient(145deg, #e7f2d9 0%, #dcebd0 62%, #d4e8df 100%);
+      background-color: #fff8e9;
+      background-image: url("tainan-hero.png");
+      background-position: right center;
+      background-size: cover;
+      background-repeat: no-repeat;
       box-shadow: 4px 5px 0 var(--ink);
       transform: rotate(-.5deg);
     }
@@ -98,6 +102,7 @@
     footer { margin-top: 27px; padding: 14px 4px 0; color: var(--muted); font-size: 13px; text-align: center; }
     @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(7deg); } }
     @media (min-width: 600px) { .page { padding-top: 22px; } .hero { min-height: 430px; padding: 45px 42px; } .stop { grid-template-columns: 82px 1fr; padding: 17px 18px 15px; } }
+    @media (max-width: 599px) { .hero { min-height: 560px; align-items: flex-start; background-size: 100% auto; background-position: center bottom; } .hero-copy { max-width: 76%; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
   </style>
 </head>
