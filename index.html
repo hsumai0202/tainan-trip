@@ -13,27 +13,32 @@
   <style>
     :root {
       color-scheme: light;
-      --ink: #3d392f;
-      --muted: #716d61;
-      --paper: #fff8e9;
-      --card: #fffef9;
-      --green: #527957;
-      --green-pale: #e5f0d9;
-      --orange: #e7834b;
-      --pink: #f3b9a9;
-      --blue: #a8d6db;
-      --yellow: #f7d77b;
-      --line: #ded4bd;
+      --primary-color: #B64A26;
+      --background-color: #FFF8E9;
+      --text-color: #302925;
+      --primary-soft: color-mix(in srgb, var(--primary-color) 12%, var(--background-color));
+      --border-color: color-mix(in srgb, var(--text-color) 25%, var(--background-color));
+      --ink: var(--text-color);
+      --muted: var(--text-color);
+      --paper: var(--background-color);
+      --card: var(--background-color);
+      --green: var(--primary-color);
+      --green-pale: var(--primary-soft);
+      --orange: var(--primary-color);
+      --pink: var(--primary-color);
+      --blue: var(--primary-soft);
+      --yellow: var(--primary-soft);
+      --line: var(--border-color);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background-color: var(--paper);
-      background-image: radial-gradient(#e7d9bc 0.7px, transparent 0.7px);
+      background-image: radial-gradient(var(--primary-soft) 0.7px, transparent 0.7px);
       background-size: 13px 13px;
       color: var(--ink);
-      font-family: "Trebuchet MS", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       font-size: 17px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
@@ -49,60 +54,60 @@
       padding: 34px 24px 34px;
       border: 2px solid var(--ink);
       border-radius: 30px 24px 32px 23px;
-      background-color: #fff8e9;
+      background-color: var(--background-color);
       background-image: url("tainan-hero.png");
       background-position: right center;
-      background-size: cover;
+      background-size: auto 100%;
       background-repeat: no-repeat;
       box-shadow: 4px 5px 0 var(--ink);
       transform: rotate(-.5deg);
     }
-    .hero-copy { position: relative; z-index: 1; max-width: 480px; }
-    .eyebrow { display: inline-block; margin: 0 0 13px; padding: 4px 11px; border: 1.5px dashed var(--green); border-radius: 20px; background: #fffdf0; color: var(--green); font-size: 14px; font-weight: 800; letter-spacing: .08em; }
+    .hero-copy { position: relative; z-index: 1; max-width: 55%; }
+    .eyebrow { display: inline-block; margin: 0 0 13px; padding: 4px 11px; border: 1.5px dashed var(--primary-color); border-radius: 20px; background: var(--background-color); color: var(--primary-color); font-size: 16px; font-weight: 800; letter-spacing: .08em; }
+    h1, h2, .place { font-family: Georgia, "Noto Serif TC", "Songti TC", "PMingLiU", serif; }
     h1 { max-width: 440px; margin: 0; font-size: clamp(42px, 11vw, 62px); line-height: 1.22; letter-spacing: .045em; text-wrap: balance; }
-    .hero-intro { max-width: 360px; margin: 16px 0 0; color: #4e584b; font-size: 17px; }
-    .sun-doodle { position: absolute; top: 22px; right: 22px; width: 66px; height: 66px; display: grid; place-items: center; color: #9a6c27; font-size: 49px; line-height: 1; animation: bob 3.2s ease-in-out infinite; }
-    .hero-sticker { display: inline-block; margin-top: 20px; padding: 7px 14px; border: 2px solid var(--ink); border-radius: 50px 42px 45px 38px; background: var(--yellow); font-size: 14px; font-weight: 800; transform: rotate(2deg); }
-    .family-doodles { display: flex; gap: 9px; margin-top: 20px; font-size: 25px; }
-    .notice { margin: 22px 3px 27px; padding: 12px 15px; border: 2px dashed #d9a56e; border-radius: 17px 14px 19px 13px; background: #fff1d8; color: #744c32; font-size: 14px; }
+    .hero-intro { max-width: 360px; margin: 16px 0 0; padding: 9px 12px; border-radius: 12px; background: color-mix(in srgb, var(--background-color) 60%, transparent); color: var(--text-color); font-size: 17px; }
+    .sun-doodle { position: absolute; top: 22px; right: 22px; width: 66px; height: 66px; display: grid; place-items: center; color: var(--primary-color); font-size: 49px; line-height: 1; animation: bob 3.2s ease-in-out infinite; }
+    .hero-sticker { display: inline-block; margin-top: 20px; padding: 7px 14px; border: 2px solid var(--ink); border-radius: 50px 42px 45px 38px; background: var(--primary-soft); color: var(--text-color); font-size: 16px; font-weight: 800; transform: rotate(2deg); }
+    .notice { margin: 22px 3px 27px; padding: 12px 15px; border: 2px dashed var(--primary-color); border-radius: 17px 14px 19px 13px; background: var(--primary-soft); color: var(--text-color); font-size: 17px; }
     .day { margin-top: 31px; scroll-margin-top: 14px; }
     .day-heading { display: flex; align-items: center; gap: 12px; margin: 0 2px 14px; }
-    .day-number { display: grid; width: 52px; height: 48px; flex: 0 0 52px; place-items: center; border: 2px solid var(--ink); border-radius: 44% 56% 48% 52%; background: var(--yellow); color: var(--ink); font-size: 13px; font-weight: 900; transform: rotate(-5deg); }
+    .day-number { display: grid; width: 52px; height: 48px; flex: 0 0 52px; place-items: center; border: 2px solid var(--ink); border-radius: 44% 56% 48% 52%; background: var(--primary-soft); color: var(--text-color); font-size: 15px; font-weight: 900; transform: rotate(-5deg); }
     .day:nth-of-type(3) .day-number { background: var(--blue); transform: rotate(4deg); }
     h2 { margin: 0; font-size: 22px; line-height: 1.35; }
-    .day-subtitle { margin: 1px 0 0; color: var(--muted); font-size: 14px; }
-    .day-nav { position: sticky; z-index: 5; top: 8px; display: flex; gap: 8px; margin: 19px 0 24px; padding: 7px; border: 2px solid var(--ink); border-radius: 18px; background: #fffdf5; box-shadow: 3px 3px 0 var(--ink); }
+    .day-subtitle { margin: 1px 0 0; color: var(--text-color); font-size: 17px; }
+    .day-nav { position: sticky; z-index: 5; top: 8px; display: flex; gap: 8px; margin: 19px 0 24px; padding: 7px; border: 2px solid var(--ink); border-radius: 18px; background: var(--background-color); box-shadow: 3px 3px 0 var(--ink); }
     .day-nav button { flex: 1; min-height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--ink); font-weight: 800; cursor: pointer; transition: background .18s ease, transform .18s ease; }
     .day-nav button:hover { transform: translateY(-2px); }
-    .day-nav button[aria-pressed="true"] { background: var(--green-pale); outline: 2px solid var(--green); }
+    .day-nav button[aria-pressed="true"] { background: var(--primary-soft); outline: 2px solid var(--primary-color); }
     .stops { display: grid; gap: 13px; }
-    .stop { position: relative; display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 15px 15px 14px; border: 2px solid var(--ink); border-radius: 19px 16px 21px 15px; background: var(--card); box-shadow: 3px 4px 0 #c9bda6; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .stop { position: relative; display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 15px 15px 14px; border: 2px solid var(--ink); border-radius: 19px 16px 21px 15px; background: var(--card); box-shadow: 3px 4px 0 var(--border-color); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
     .stop:nth-child(3n + 1) { transform: rotate(-.35deg); }
     .stop:nth-child(3n + 2) { transform: rotate(.3deg); }
-    .stop:hover, .stop:focus-within { transform: translateY(-3px) rotate(0); box-shadow: 4px 7px 0 #c9bda6; }
-    .time { display: inline-flex; align-self: start; justify-content: center; padding: 3px 7px; border: 1.5px solid var(--ink); border-radius: 12px 9px 11px 8px; background: #ffe1bf; color: #784421; font-size: 13px; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .stop:hover, .stop:focus-within { transform: translateY(-3px) rotate(0); box-shadow: 4px 7px 0 var(--border-color); }
+    .time { display: inline-flex; align-self: start; justify-content: center; padding: 3px 7px; border: 1.5px solid var(--primary-color); border-radius: 12px 9px 11px 8px; background: var(--primary-color); color: var(--background-color); font-size: 17px; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .place { margin: 0; font-size: 18px; font-weight: 850; line-height: 1.4; }
-    .kind { display: inline-block; margin-left: 4px; color: var(--green); font-size: 12px; font-weight: 750; }
-    .description { margin: 5px 0 0; color: #565349; font-size: 15px; line-height: 1.6; }
-    .done-button { grid-column: 2; justify-self: start; margin-top: 8px; padding: 5px 10px; border: 1.5px solid #918875; border-radius: 12px 10px 13px 9px; background: #fffdf6; color: #625e53; font-size: 13px; font-weight: 750; cursor: pointer; transition: .18s ease; }
-    .done-button:hover { background: #f4eddb; }
-    .done-button[aria-pressed="true"] { border-color: var(--green); background: var(--green-pale); color: #31573a; }
-    .stop.is-done { background: #f0f5e9; }
-    .stop.is-done .place { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #8aab7d; }
-    .trip-progress { margin: 17px 3px 0; color: var(--muted); font-size: 14px; font-weight: 700; }
-    .progress-track { height: 10px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--ink); border-radius: 99px; background: #fffdf5; }
-    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: #92bd79; transition: width .3s ease; }
-    .reminders { margin-top: 34px; padding: 18px 18px 16px; border: 2px solid var(--ink); border-radius: 23px 17px 21px 16px; background: #e6f1f0; box-shadow: 3px 4px 0 var(--ink); }
+    .kind { display: inline-block; margin-left: 4px; color: var(--primary-color); font-size: 15px; font-weight: 750; }
+    .description { margin: 5px 0 0; color: var(--text-color); font-size: 17px; line-height: 1.7; }
+    .done-button { grid-column: 2; justify-self: start; margin-top: 8px; padding: 5px 10px; border: 1.5px solid var(--text-color); border-radius: 12px 10px 13px 9px; background: var(--background-color); color: var(--text-color); font-size: 17px; font-weight: 750; cursor: pointer; transition: .18s ease; }
+    .done-button:hover { background: var(--primary-soft); }
+    .done-button[aria-pressed="true"] { border-color: var(--primary-color); background: var(--primary-soft); color: var(--text-color); }
+    .stop.is-done { background: var(--primary-soft); }
+    .stop.is-done .place { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--primary-color); }
+    .trip-progress { margin: 17px 3px 0; color: var(--text-color); font-size: 17px; font-weight: 700; }
+    .progress-track { height: 10px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--text-color); border-radius: 99px; background: var(--background-color); }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: var(--primary-color); transition: width .3s ease; }
+    .reminders { margin-top: 34px; padding: 18px 18px 16px; border: 2px solid var(--ink); border-radius: 23px 17px 21px 16px; background: var(--primary-soft); box-shadow: 3px 4px 0 var(--ink); }
     .reminders h2 { display: flex; align-items: center; gap: 8px; }
     .reminders h2::before { content: "✎"; display: grid; width: 31px; height: 31px; place-items: center; border-radius: 50%; background: var(--yellow); font-size: 19px; }
-    .reminders p { margin: 9px 0 0; color: #4b5a56; font-size: 15px; }
+    .reminders p { margin: 9px 0 0; color: var(--text-color); font-size: 17px; }
     .site-qr { width: min(100%, 188px); margin: 16px auto 0; text-align: center; }
-    .site-qr img { display: block; width: 100%; height: auto; padding: 8px; border: 2px solid var(--ink); border-radius: 14px; background: #fff; }
-    .site-qr figcaption { margin-top: 6px; color: var(--muted); font-size: 13px; }
-    footer { margin-top: 27px; padding: 14px 4px 0; color: var(--muted); font-size: 13px; text-align: center; }
+    .site-qr img { display: block; width: 100%; height: auto; padding: 8px; border: 2px solid var(--ink); border-radius: 14px; background: var(--background-color); }
+    .site-qr figcaption { margin-top: 6px; color: var(--text-color); font-size: 15px; }
+    footer { margin-top: 27px; padding: 14px 4px 0; color: var(--text-color); font-size: 15px; text-align: center; }
     @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(7deg); } }
     @media (min-width: 600px) { .page { padding-top: 22px; } .hero { min-height: 430px; padding: 45px 42px; } .stop { grid-template-columns: 82px 1fr; padding: 17px 18px 15px; } }
-    @media (max-width: 599px) { .hero { min-height: 560px; align-items: flex-start; background-size: 100% auto; background-position: center bottom; } .hero-copy { max-width: 76%; } }
+    @media (max-width: 599px) { .hero { min-height: 560px; align-items: flex-start; background-size: auto 58%; background-position: right bottom; } .hero-copy { max-width: 76%; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
   </style>
 </head>
@@ -114,7 +119,6 @@
         <h1>親子旅遊，<br>漫遊台南</h1>
         <p class="hero-intro">牽著小旅伴的手，和大朋友一起逛老街、吃點心，把台南玩成一家人的回憶。</p>
         <span class="hero-sticker">出發去玩！✦</span>
-        <div class="family-doodles" aria-hidden="true"><span>🧒🏻</span><span>🧑🏻</span><span>🐾</span><span>🍡</span></div>
       </div>
       <span class="sun-doodle" aria-hidden="true">☼</span>
     </header>
