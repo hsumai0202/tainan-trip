@@ -87,6 +87,9 @@
     .reminders h2 { display: flex; align-items: center; gap: 8px; }
     .reminders h2::before { content: "✎"; display: grid; width: 31px; height: 31px; place-items: center; border-radius: 50%; background: var(--yellow); font-size: 19px; }
     .reminders p { margin: 9px 0 0; color: #4b5a56; font-size: 15px; }
+    .site-qr { width: min(100%, 188px); margin: 16px auto 0; text-align: center; }
+    .site-qr img { display: block; width: 100%; height: auto; padding: 8px; border: 2px solid var(--ink); border-radius: 14px; background: #fff; }
+    .site-qr figcaption { margin-top: 6px; color: var(--muted); font-size: 13px; }
     footer { margin-top: 27px; padding: 14px 4px 0; color: var(--muted); font-size: 13px; text-align: center; }
     @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(7deg); } }
     @media (min-width: 600px) { .page { padding-top: 22px; } .hero { min-height: 430px; padding: 45px 42px; } .stop { grid-template-columns: 82px 1fr; padding: 17px 18px 15px; } }
@@ -113,6 +116,11 @@
       <p>🌤️ 天氣：晴時多雲，出門前再確認天氣預報（示意）。</p>
       <p>🎒 要帶的東西：水壺、帽子、雨傘與行動電源（示意）。</p>
       <p>⏰ 集合時間：第一天上午 9:00（示意）。</p>
+      <p>📍 集合地點：台北車站南門出口</p>
+      <figure class="site-qr">
+        <img src="tainan-trip-pages-qr.png" alt="掃描 QR 碼開啟台南親子旅遊網站">
+        <figcaption>掃描 QR 碼開啟行程</figcaption>
+      </figure>
     </section>
 
     <nav class="day-nav" aria-label="快速切換行程日">
