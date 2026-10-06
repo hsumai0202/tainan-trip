@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8e9">
+  <title>親子旅遊，漫遊台南｜小旅伴出發！</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #3d392f;
+      --muted: #716d61;
+      --paper: #fff8e9;
+      --card: #fffef9;
+      --green: #527957;
+      --green-pale: #e5f0d9;
+      --orange: #e7834b;
+      --pink: #f3b9a9;
+      --blue: #a8d6db;
+      --yellow: #f7d77b;
+      --line: #ded4bd;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background-color: var(--paper);
+      background-image: radial-gradient(#e7d9bc 0.7px, transparent 0.7px);
+      background-size: 13px 13px;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; }
+    .page { width: min(100% - 30px, 680px); margin: 0 auto; padding: 10px 0 46px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: min(70vh, 470px);
+      display: flex;
+      align-items: center;
+      padding: 34px 24px 34px;
+      border: 2px solid var(--ink);
+      border-radius: 30px 24px 32px 23px;
+      background: linear-gradient(145deg, #e7f2d9 0%, #dcebd0 62%, #d4e8df 100%);
+      box-shadow: 4px 5px 0 var(--ink);
+      transform: rotate(-.5deg);
+    }
+    .hero-copy { position: relative; z-index: 1; max-width: 480px; }
+    .eyebrow { display: inline-block; margin: 0 0 13px; padding: 4px 11px; border: 1.5px dashed var(--green); border-radius: 20px; background: #fffdf0; color: var(--green); font-size: 14px; font-weight: 800; letter-spacing: .08em; }
+    h1 { max-width: 440px; margin: 0; font-size: clamp(42px, 11vw, 62px); line-height: 1.22; letter-spacing: .045em; text-wrap: balance; }
+    .hero-intro { max-width: 360px; margin: 16px 0 0; color: #4e584b; font-size: 17px; }
+    .sun-doodle { position: absolute; top: 22px; right: 22px; width: 66px; height: 66px; display: grid; place-items: center; color: #9a6c27; font-size: 49px; line-height: 1; animation: bob 3.2s ease-in-out infinite; }
+    .hero-sticker { display: inline-block; margin-top: 20px; padding: 7px 14px; border: 2px solid var(--ink); border-radius: 50px 42px 45px 38px; background: var(--yellow); font-size: 14px; font-weight: 800; transform: rotate(2deg); }
+    .family-doodles { display: flex; gap: 9px; margin-top: 20px; font-size: 25px; }
+    .notice { margin: 22px 3px 27px; padding: 12px 15px; border: 2px dashed #d9a56e; border-radius: 17px 14px 19px 13px; background: #fff1d8; color: #744c32; font-size: 14px; }
+    .day { margin-top: 31px; scroll-margin-top: 14px; }
+    .day-heading { display: flex; align-items: center; gap: 12px; margin: 0 2px 14px; }
+    .day-number { display: grid; width: 52px; height: 48px; flex: 0 0 52px; place-items: center; border: 2px solid var(--ink); border-radius: 44% 56% 48% 52%; background: var(--yellow); color: var(--ink); font-size: 13px; font-weight: 900; transform: rotate(-5deg); }
+    .day:nth-of-type(3) .day-number { background: var(--blue); transform: rotate(4deg); }
+    h2 { margin: 0; font-size: 22px; line-height: 1.35; }
+    .day-subtitle { margin: 1px 0 0; color: var(--muted); font-size: 14px; }
+    .day-nav { position: sticky; z-index: 5; top: 8px; display: flex; gap: 8px; margin: 19px 0 24px; padding: 7px; border: 2px solid var(--ink); border-radius: 18px; background: #fffdf5; box-shadow: 3px 3px 0 var(--ink); }
+    .day-nav button { flex: 1; min-height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--ink); font-weight: 800; cursor: pointer; transition: background .18s ease, transform .18s ease; }
+    .day-nav button:hover { transform: translateY(-2px); }
+    .day-nav button[aria-pressed="true"] { background: var(--green-pale); outline: 2px solid var(--green); }
+    .stops { display: grid; gap: 13px; }
+    .stop { position: relative; display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 15px 15px 14px; border: 2px solid var(--ink); border-radius: 19px 16px 21px 15px; background: var(--card); box-shadow: 3px 4px 0 #c9bda6; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .stop:nth-child(3n + 1) { transform: rotate(-.35deg); }
+    .stop:nth-child(3n + 2) { transform: rotate(.3deg); }
+    .stop:hover, .stop:focus-within { transform: translateY(-3px) rotate(0); box-shadow: 4px 7px 0 #c9bda6; }
+    .time { display: inline-flex; align-self: start; justify-content: center; padding: 3px 7px; border: 1.5px solid var(--ink); border-radius: 12px 9px 11px 8px; background: #ffe1bf; color: #784421; font-size: 13px; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .place { margin: 0; font-size: 18px; font-weight: 850; line-height: 1.4; }
+    .kind { display: inline-block; margin-left: 4px; color: var(--green); font-size: 12px; font-weight: 750; }
+    .description { margin: 5px 0 0; color: #565349; font-size: 15px; line-height: 1.6; }
+    .done-button { grid-column: 2; justify-self: start; margin-top: 8px; padding: 5px 10px; border: 1.5px solid #918875; border-radius: 12px 10px 13px 9px; background: #fffdf6; color: #625e53; font-size: 13px; font-weight: 750; cursor: pointer; transition: .18s ease; }
+    .done-button:hover { background: #f4eddb; }
+    .done-button[aria-pressed="true"] { border-color: var(--green); background: var(--green-pale); color: #31573a; }
+    .stop.is-done { background: #f0f5e9; }
+    .stop.is-done .place { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #8aab7d; }
+    .trip-progress { margin: 17px 3px 0; color: var(--muted); font-size: 14px; font-weight: 700; }
+    .progress-track { height: 10px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--ink); border-radius: 99px; background: #fffdf5; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: #92bd79; transition: width .3s ease; }
+    .reminders { margin-top: 34px; padding: 18px 18px 16px; border: 2px solid var(--ink); border-radius: 23px 17px 21px 16px; background: #e6f1f0; box-shadow: 3px 4px 0 var(--ink); }
+    .reminders h2 { display: flex; align-items: center; gap: 8px; }
+    .reminders h2::before { content: "✎"; display: grid; width: 31px; height: 31px; place-items: center; border-radius: 50%; background: var(--yellow); font-size: 19px; }
+    .reminders p { margin: 9px 0 0; color: #4b5a56; font-size: 15px; }
+    footer { margin-top: 27px; padding: 14px 4px 0; color: var(--muted); font-size: 13px; text-align: center; }
+    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(7deg); } }
+    @media (min-width: 600px) { .page { padding-top: 22px; } .hero { min-height: 430px; padding: 45px 42px; } .stop { grid-template-columns: 82px 1fr; padding: 17px 18px 15px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">👨‍👩‍👧‍👦 大朋友、小旅伴一起出發</p>
+        <h1>親子旅遊，<br>漫遊台南</h1>
+        <p class="hero-intro">牽著小旅伴的手，和大朋友一起逛老街、吃點心，把台南玩成一家人的回憶。</p>
+        <span class="hero-sticker">出發去玩！✦</span>
+        <div class="family-doodles" aria-hidden="true"><span>🧒🏻</span><span>🧑🏻</span><span>🐾</span><span>🍡</span></div>
+      </div>
+      <span class="sun-doodle" aria-hidden="true">☼</span>
+    </header>
+
+    <p class="notice">🖍️ 行程中的店名與時間皆為示意，大朋友出發前再確認實際安排喔！</p>
+
+    <section class="reminders" aria-labelledby="before-you-go-title">
+      <h2 id="before-you-go-title">行前提醒</h2>
+      <p>🌤️ 天氣：晴時多雲，出門前再確認天氣預報（示意）。</p>
+      <p>🎒 要帶的東西：水壺、帽子、雨傘與行動電源（示意）。</p>
+      <p>⏰ 集合時間：第一天上午 9:00（示意）。</p>
+    </section>
+
+    <nav class="day-nav" aria-label="快速切換行程日">
+      <button type="button" data-target="day-one" aria-pressed="true">☀️ 第一天</button>
+      <button type="button" data-target="day-two" aria-pressed="false">🌊 第二天</button>
+    </nav>
+
+    <section class="day" id="day-one" aria-labelledby="day-one-title">
+      <div class="day-heading">
+        <span class="day-number">DAY 1</span>
+        <div><h2 id="day-one-title">老城散步・夜市小吃</h2><p class="day-subtitle">古蹟、巷弄和熱鬧夜晚</p></div>
+      </div>
+      <div class="stops">
+        <article class="stop"><time class="time" datetime="09:30">09:30</time><div><h3 class="place">赤崁樓 <span class="kind">古蹟・示意</span></h3><p class="description">從紅磚古城牆開始，慢慢認識台南的歷史風景。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="11:30">11:30</time><div><h3 class="place">府城小吃店（示意） <span class="kind">午餐</span></h3><p class="description">來碗暖呼呼的牛肉湯，再配幾樣在地小菜。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="14:00">14:00</time><div><h3 class="place">神農街 <span class="kind">老街・散步</span></h3><p class="description">穿過老屋與小店，留點時間拍照、逛逛巷弄。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="18:00">18:00</time><div><h3 class="place">花園夜市（示意） <span class="kind">晚餐・夜市</span></h3><p class="description">晚餐就交給大家分著吃，邊走邊挑喜歡的小吃。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+      </div>
+      <div class="trip-progress" aria-live="polite"><span class="progress-label">完成 0 / 8 站</span><div class="progress-track" role="progressbar" aria-label="行程完成進度" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="progress-fill"></div></div></div>
+    </section>
+
+    <section class="day" id="day-two" aria-labelledby="day-two-title">
+      <div class="day-heading">
+        <span class="day-number">DAY 2</span>
+        <div><h2 id="day-two-title">海風午後・甜點收尾</h2><p class="day-subtitle">從早午餐一路玩到夕陽</p></div>
+      </div>
+      <div class="stops">
+        <article class="stop"><time class="time" datetime="09:00">09:00</time><div><h3 class="place">巷口早午餐（示意） <span class="kind">早餐</span></h3><p class="description">睡飽再出門，找間舒服的小店補充元氣。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="11:00">11:00</time><div><h3 class="place">安平樹屋 <span class="kind">景點・散步</span></h3><p class="description">看看老榕樹如何攀上倉庫，在樹影裡走一圈。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="13:00">13:00</time><div><h3 class="place">安平老街午餐（示意） <span class="kind">午餐</span></h3><p class="description">挑幾樣蝦餅、豆花和在地小吃，邊吃邊逛。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+        <article class="stop"><time class="time" datetime="16:00">16:00</time><div><h3 class="place">河樂廣場 <span class="kind">散步・收尾</span></h3><p class="description">在開闊的水景旁休息一下，替旅程留個輕鬆句點。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
+      </div>
+    </section>
+
+    <footer>行程時間為示意，大朋友可依交通與店家營業時間調整。<br>祝小旅伴和大朋友都玩得開心！</footer>
+  </main>
+  <script>
+    const dayButtons = document.querySelectorAll('.day-nav button');
+    dayButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        document.getElementById(button.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        dayButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      });
+    });
+
+    const doneButtons = document.querySelectorAll('.done-button');
+    const progressLabel = document.querySelector('.progress-label');
+    const progressBar = document.querySelector('[role="progressbar"]');
+    const progressFill = document.querySelector('.progress-fill');
+    doneButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const completed = button.getAttribute('aria-pressed') !== 'true';
+        button.setAttribute('aria-pressed', String(completed));
+        button.textContent = completed ? '✓ 已完成' : '□ 標記已完成';
+        button.closest('.stop').classList.toggle('is-done', completed);
+        const count = document.querySelectorAll('.done-button[aria-pressed="true"]').length;
+        progressLabel.textContent = `完成 ${count} / ${doneButtons.length} 站`;
+        progressBar.setAttribute('aria-valuenow', String(count));
+        progressFill.style.width = `${count / doneButtons.length * 100}%`;
+      });
+    });
+  </script>
+</body>
+</html>
