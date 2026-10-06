@@ -1,201 +1,76 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff8e9">
-  <meta name="description" content="大朋友小朋友童樂趣">
-  <meta property="og:title" content="親子旅遊">
-  <meta property="og:description" content="大朋友小朋友童樂趣">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hsumai0202.github.io/tainan-trip/">
-  <title>親子旅遊，漫遊台南｜小旅伴出發！</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f8fa" />
+  <title>專案時程｜工作排程</title>
   <style>
-    :root {
-      color-scheme: light;
-      --primary-color: #B64A26;
-      --background-color: #FFF8E9;
-      --text-color: #302925;
-      --primary-soft: color-mix(in srgb, var(--primary-color) 12%, var(--background-color));
-      --border-color: color-mix(in srgb, var(--text-color) 25%, var(--background-color));
-      --ink: var(--text-color);
-      --muted: var(--text-color);
-      --paper: var(--background-color);
-      --card: var(--background-color);
-      --green: var(--primary-color);
-      --green-pale: var(--primary-soft);
-      --orange: var(--primary-color);
-      --pink: var(--primary-color);
-      --blue: var(--primary-soft);
-      --yellow: var(--primary-soft);
-      --line: var(--border-color);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background-color: var(--paper);
-      background-image: radial-gradient(var(--primary-soft) 0.7px, transparent 0.7px);
-      background-size: 13px 13px;
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      font-size: 17px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-    button { font: inherit; }
-    .page { width: min(100% - 30px, 680px); margin: 0 auto; padding: 10px 0 46px; }
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: min(70vh, 470px);
-      display: flex;
-      align-items: center;
-      padding: 34px 24px 34px;
-      border: 2px solid var(--ink);
-      border-radius: 30px 24px 32px 23px;
-      background-color: var(--background-color);
-      background-image: url("tainan-hero.png");
-      background-position: right center;
-      background-size: auto 100%;
-      background-repeat: no-repeat;
-      box-shadow: 4px 5px 0 var(--ink);
-      transform: rotate(-.5deg);
-    }
-    .hero-copy { position: relative; z-index: 1; max-width: 55%; }
-    .eyebrow { display: inline-block; margin: 0 0 13px; padding: 4px 11px; border: 1.5px dashed var(--primary-color); border-radius: 20px; background: var(--background-color); color: var(--primary-color); font-size: 16px; font-weight: 800; letter-spacing: .08em; }
-    h1, h2, .place { font-family: Georgia, "Noto Serif TC", "Songti TC", "PMingLiU", serif; }
-    h1 { max-width: 440px; margin: 0; font-size: clamp(42px, 11vw, 62px); line-height: 1.22; letter-spacing: .045em; text-wrap: balance; }
-    .hero-intro { max-width: 360px; margin: 16px 0 0; padding: 9px 12px; border-radius: 12px; background: color-mix(in srgb, var(--background-color) 60%, transparent); color: var(--text-color); font-size: 17px; }
-    .sun-doodle { position: absolute; top: 22px; right: 22px; width: 66px; height: 66px; display: grid; place-items: center; color: var(--primary-color); font-size: 49px; line-height: 1; animation: bob 3.2s ease-in-out infinite; }
-    .hero-sticker { display: inline-block; margin-top: 20px; padding: 7px 14px; border: 2px solid var(--ink); border-radius: 50px 42px 45px 38px; background: var(--primary-soft); color: var(--text-color); font-size: 16px; font-weight: 800; transform: rotate(2deg); }
-    .notice { margin: 22px 3px 27px; padding: 12px 15px; border: 2px dashed var(--primary-color); border-radius: 17px 14px 19px 13px; background: var(--primary-soft); color: var(--text-color); font-size: 17px; }
-    .day { margin-top: 31px; scroll-margin-top: 14px; }
-    .day-heading { display: flex; align-items: center; gap: 12px; margin: 0 2px 14px; }
-    .day-number { display: grid; width: 52px; height: 48px; flex: 0 0 52px; place-items: center; border: 2px solid var(--ink); border-radius: 44% 56% 48% 52%; background: var(--primary-soft); color: var(--text-color); font-size: 15px; font-weight: 900; transform: rotate(-5deg); }
-    .day:nth-of-type(3) .day-number { background: var(--blue); transform: rotate(4deg); }
-    h2 { margin: 0; font-size: 22px; line-height: 1.35; }
-    .day-subtitle { margin: 1px 0 0; color: var(--text-color); font-size: 17px; }
-    .day-nav { position: sticky; z-index: 5; top: 8px; display: flex; gap: 8px; margin: 19px 0 24px; padding: 7px; border: 2px solid var(--ink); border-radius: 18px; background: var(--background-color); box-shadow: 3px 3px 0 var(--ink); }
-    .day-nav button { flex: 1; min-height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--ink); font-weight: 800; cursor: pointer; transition: background .18s ease, transform .18s ease; }
-    .day-nav button:hover { transform: translateY(-2px); }
-    .day-nav button[aria-pressed="true"] { background: var(--primary-soft); outline: 2px solid var(--primary-color); }
-    .stops { display: grid; gap: 13px; }
-    .stop { position: relative; display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 15px 15px 14px; border: 2px solid var(--ink); border-radius: 19px 16px 21px 15px; background: var(--card); box-shadow: 3px 4px 0 var(--border-color); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
-    .stop:nth-child(3n + 1) { transform: rotate(-.35deg); }
-    .stop:nth-child(3n + 2) { transform: rotate(.3deg); }
-    .stop:hover, .stop:focus-within { transform: translateY(-3px) rotate(0); box-shadow: 4px 7px 0 var(--border-color); }
-    .time { display: inline-flex; align-self: start; justify-content: center; padding: 3px 7px; border: 1.5px solid var(--primary-color); border-radius: 12px 9px 11px 8px; background: var(--primary-color); color: var(--background-color); font-size: 17px; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .place { margin: 0; font-size: 18px; font-weight: 850; line-height: 1.4; }
-    .kind { display: inline-block; margin-left: 4px; color: var(--primary-color); font-size: 15px; font-weight: 750; }
-    .description { margin: 5px 0 0; color: var(--text-color); font-size: 17px; line-height: 1.7; }
-    .done-button { grid-column: 2; justify-self: start; margin-top: 8px; padding: 5px 10px; border: 1.5px solid var(--text-color); border-radius: 12px 10px 13px 9px; background: var(--background-color); color: var(--text-color); font-size: 17px; font-weight: 750; cursor: pointer; transition: .18s ease; }
-    .done-button:hover { background: var(--primary-soft); }
-    .done-button[aria-pressed="true"] { border-color: var(--primary-color); background: var(--primary-soft); color: var(--text-color); }
-    .stop.is-done { background: var(--primary-soft); }
-    .stop.is-done .place { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--primary-color); }
-    .trip-progress { margin: 17px 3px 0; color: var(--text-color); font-size: 17px; font-weight: 700; }
-    .progress-track { height: 10px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--text-color); border-radius: 99px; background: var(--background-color); }
-    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: var(--primary-color); transition: width .3s ease; }
-    .reminders { margin-top: 34px; padding: 18px 18px 16px; border: 2px solid var(--ink); border-radius: 23px 17px 21px 16px; background: var(--primary-soft); box-shadow: 3px 4px 0 var(--ink); }
-    .reminders h2 { display: flex; align-items: center; gap: 8px; }
-    .reminders h2::before { content: "✎"; display: grid; width: 31px; height: 31px; place-items: center; border-radius: 50%; background: var(--yellow); font-size: 19px; }
-    .reminders p { margin: 9px 0 0; color: var(--text-color); font-size: 17px; }
-    .site-qr { width: min(100%, 188px); margin: 16px auto 0; text-align: center; }
-    .site-qr img { display: block; width: 100%; height: auto; padding: 8px; border: 2px solid var(--ink); border-radius: 14px; background: var(--background-color); }
-    .site-qr figcaption { margin-top: 6px; color: var(--text-color); font-size: 15px; }
-    footer { margin-top: 27px; padding: 14px 4px 0; color: var(--text-color); font-size: 15px; text-align: center; }
-    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(7deg); } }
-    @media (min-width: 600px) { .page { padding-top: 22px; } .hero { min-height: 430px; padding: 45px 42px; } .stop { grid-template-columns: 82px 1fr; padding: 17px 18px 15px; } }
-    @media (max-width: 599px) { .hero { min-height: 560px; align-items: flex-start; background-size: auto 58%; background-position: right bottom; } .hero-copy { max-width: 76%; } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+    :root{--ink:#242b36;--muted:#818a99;--line:#e8ebf0;--bg:#f5f6f8;--purple:#7867e8;--left:660px;--day:44px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink);font-size:13px}
+    button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;padding:26px 30px 40px;max-width:1900px;margin:auto}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{height:38px;width:38px;border-radius:12px;background:#eeeaff;color:var(--purple);display:grid;place-items:center;font-size:20px}.brand h1{font-size:20px;margin:0 0 3px;letter-spacing:-.3px}.brand p{margin:0;color:var(--muted);font-size:12px}.actions{display:flex;gap:9px;align-items:center}.btn{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:white;color:#515b69;font-weight:600;box-shadow:0 1px 2px #18223008}.btn:hover{background:#fafaff;border-color:#d8d2fb}.btn.primary{background:var(--purple);border-color:var(--purple);color:white}.btn.primary:hover{background:#6858d5}.icon-btn{width:36px;height:36px;padding:0;font-size:16px}
+    .toolbar{background:#fff;border:1px solid var(--line);border-radius:12px 12px 0 0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}.tabs{display:flex;gap:7px}.tab{border:0;background:transparent;padding:9px 12px;color:#858d9b;border-radius:8px;font-weight:600}.tab.active{background:#f0edff;color:#6555cf}.toolbar-right{display:flex;align-items:center;gap:10px}.search{border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:185px;outline:none}.search:focus{border-color:#a79df0}.month-label{font-weight:700;min-width:106px;text-align:center;font-size:14px}.legend{display:flex;gap:14px;color:#717b89;font-size:11px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:8px;height:8px;border-radius:3px;background:#b0a5ff}.dot.launch{background:#ffc879}.timeline-controls{display:flex;align-items:center;gap:7px}.timeline-control-label{font-size:10px;color:#969daa;margin-left:3px}
+    .board-shell{border:1px solid var(--line);border-top:0;background:#fff;border-radius:0 0 12px 12px;overflow-x:auto;overflow-y:hidden;box-shadow:0 8px 28px #1e293b09}.board{min-width:0;--project-col:minmax(400px,1.2fr);--designer-col:minmax(250px,.8fr);--timeline-col:calc(var(--day) * 42)}.section-headings{display:grid;grid-template-columns:var(--project-col) var(--designer-col) var(--timeline-col);background:#fcfcfd;border-bottom:1px solid var(--line)}.section-heading{height:39px;display:flex;align-items:center;padding:0 16px;color:#677180;font-size:11px;font-weight:750;letter-spacing:.2px}.section-heading+.section-heading{border-left:1px solid var(--line)}.section-heading .num{width:19px;height:19px;display:grid;place-items:center;border-radius:6px;background:#efedff;color:#695bd1;margin-right:8px;font-size:10px}.calendar-head,.project-row{display:grid;grid-template-columns:var(--project-col) var(--designer-col) var(--timeline-col)}.project-head{min-height:45px;display:grid;grid-template-columns:minmax(110px,1.3fr) 105px 105px;align-items:center;padding:0 15px;color:#9299a6;font-size:10px;font-weight:700}.designer-head{min-height:45px;padding:0 15px;display:flex;align-items:center;color:#9299a6;font-size:10px;font-weight:700;border-left:1px solid var(--line)}.timeline-head{overflow:hidden;position:relative;border-left:1px solid var(--line)}.timeline-cell{height:100%;min-height:86px;overflow:hidden;border-left:1px solid var(--line)}.months{width:calc(var(--day) * 42);height:39px;border-bottom:1px solid var(--line);display:flex;align-items:center;color:#596373;font-weight:700;font-size:12px;white-space:nowrap}.days{width:calc(var(--day) * 42);height:40px;display:grid;grid-auto-columns:var(--day);grid-auto-flow:column;text-align:center;align-items:center;color:#87909d;font-size:11px}.days div{height:40px;border-left:1px solid #f0f1f4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}.days b{font-size:11px;color:#485362}.days .weekend{background:#fafbfc}.days .today b{color:var(--purple)}.days .today:after{content:"";height:3px;width:15px;border-radius:3px;background:var(--purple);margin-top:1px}
+    .project-group{display:contents}.project-row{min-height:86px;border-top:0}.designer-info{display:flex;align-items:flex-start;padding:12px 15px;border-left:1px solid var(--line);min-width:0}.designer-stack{display:flex;flex-direction:column;gap:8px;min-width:0}.designer-entry{display:flex;align-items:center;min-height:26px;gap:8px}.designer-entry.first{margin-bottom:2px}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-person span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.designer-project{padding:5px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.project-info{display:grid;grid-template-columns:minmax(110px,1fr) 64px 64px;align-items:center;margin:8px 6px 8px 8px;padding:9px 7px;gap:3px;min-height:70px;border:1px solid #eceaf7;border-radius:11px;background:#fff;box-shadow:0 2px 7px #27204409}.name-wrap{min-width:0}.project-name{font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#303746}.cell{font-size:11px;color:#687281}.date{font-variant-numeric:tabular-nums}.date.pending{color:#aaa3cb}.project-card-line{display:grid;grid-template-columns:minmax(110px,1fr) 64px 64px;gap:3px;align-items:center;min-height:70px;margin:8px 6px 8px 8px;padding:9px 7px;border:1px solid #eceaf7;border-radius:11px;background:#fff;box-shadow:0 2px 7px #27204409;font-weight:700}.designer-project-list{display:flex;flex-direction:column;gap:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;min-height:0}.designer-info{display:flex;align-items:flex-start;padding:0 15px;border-left:1px solid var(--line);min-width:0}.designer-stack{display:flex;flex-direction:column;gap:0}.designer-entry{display:flex;align-items:center;min-height:86px;gap:8px}.designer-entry.first{margin-bottom:0}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-project{padding:5px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.timeline-group{border-left:1px solid var(--line)}.timeline-row{height:86px;border-bottom:1px solid #f0f1f3}.timeline-row .track{height:86px}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-person span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.assigned-project{margin-left:7px;padding:6px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.avatar{height:23px;width:23px;flex:0 0 23px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:700;background:#eeeaff;color:#6758d0}.avatar.a2{background:#e4f4ef;color:#39866e}.avatar.a3{background:#fff0e3;color:#c27b36}.avatar.a4{background:#eaf1ff;color:#5474bd}.avatar.a5{background:#ffe9ed;color:#bb6374}.track{height:100%;min-height:86px;position:relative;background-image:linear-gradient(to right,#eff0f3 1px,transparent 1px);background-size:var(--day) 100%;background-position:left top}.track .weekend-band{position:absolute;top:0;bottom:0;background:#fafbfc;pointer-events:none}.bar{height:25px;position:absolute;top:17px;border-radius:7px;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px;font-weight:650;box-shadow:0 2px 4px #232b3610;z-index:2}.bar.demand{background:#e9e5ff;color:#5e50bd}.bar.launch{background:#fff0d7;color:#ab711e;top:52px;height:21px;font-size:9px}.bar.muted{background:#f1f2f5;color:#8c94a0;border:1px dashed #d4d8df;box-shadow:none}.bar .bar-tag{margin-left:auto;padding-left:8px;opacity:.72}.project-row.hidden{display:none}.empty{padding:40px;text-align:center;color:#949ba7}.footer{color:#969daa;font-size:11px;padding:13px 3px}
+    .modal-backdrop{position:fixed;inset:0;background:#1e24304d;display:none;align-items:center;justify-content:center;z-index:10;padding:20px}.modal-backdrop.open{display:flex}.modal{background:#fff;width:min(460px,100%);border-radius:14px;padding:22px;box-shadow:0 20px 60px #14192740}.modal h2{font-size:17px;margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#707a88;font-weight:700}.field input,.field select{border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink);background:white}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:21px}.delete{margin-right:auto;color:#bd5360}.close{background:none;border:0;font-size:20px;color:#87909d;float:right;line-height:1}
+    /* compact viewing layout */
+    .project-row{min-height:58px}
+    .project-info{margin:2px 4px 2px 6px;min-height:52px;padding:6px 6px}
+    .project-card-line{min-height:52px;margin:2px 4px 2px 6px;padding:6px 6px}
+    .designer-entry{min-height:58px}
+    .timeline-row,.timeline-row .track,.timeline-cell{height:58px;min-height:58px}
+    .bar{top:7px}.bar.launch{top:34px}
+    .project-head,.designer-head{min-height:36px}
+    @media(max-width:760px){.app{padding:17px 12px 28px}.topbar{align-items:flex-start;gap:12px}.brand h1{font-size:17px}.actions .btn:not(.primary){display:none}.toolbar{align-items:flex-start;gap:12px;flex-direction:column}.toolbar-right{width:100%;justify-content:space-between}.search{width:145px}.board{--project-col:285px;--designer-col:240px;--timeline-col:calc(var(--day) * 42)}.project-head,.project-info{grid-template-columns:minmax(90px,1fr) 58px 58px;gap:3px}.project-info{margin:7px 5px;padding:8px 6px}:root{--day:40px}}
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">👨‍👩‍👧‍👦 大朋友、小旅伴一起出發</p>
-        <h1>親子旅遊，<br>漫遊台南</h1>
-        <p class="hero-intro">牽著小旅伴的手，和大朋友一起逛老街、吃點心，把台南玩成一家人的回憶。</p>
-        <span class="hero-sticker">出發去玩！✦</span>
-      </div>
-      <span class="sun-doodle" aria-hidden="true">☼</span>
-    </header>
-
-    <p class="notice">🖍️ 行程中的店名與時間皆為示意，大朋友出發前再確認實際安排喔！</p>
-
-    <section class="reminders" aria-labelledby="before-you-go-title">
-      <h2 id="before-you-go-title">行前提醒</h2>
-      <p>🌤️ 天氣：晴時多雲，出門前再確認天氣預報（示意）。</p>
-      <p>🎒 要帶的東西：水壺、帽子、雨傘與行動電源（示意）。</p>
-      <p>⏰ 集合時間：第一天上午 9:00（示意）。</p>
-      <p>📍 集合地點：台北車站南門出口</p>
-      <figure class="site-qr">
-        <img src="tainan-trip-pages-qr.png" alt="掃描 QR 碼開啟台南親子旅遊網站">
-        <figcaption>掃描 QR 碼開啟行程</figcaption>
-      </figure>
-    </section>
-
-    <nav class="day-nav" aria-label="快速切換行程日">
-      <button type="button" data-target="day-one" aria-pressed="true">☀️ 第一天</button>
-      <button type="button" data-target="day-two" aria-pressed="false">🌊 第二天</button>
-    </nav>
-
-    <section class="day" id="day-one" aria-labelledby="day-one-title">
-      <div class="day-heading">
-        <span class="day-number">DAY 1</span>
-        <div><h2 id="day-one-title">老城散步・夜市小吃</h2><p class="day-subtitle">古蹟、巷弄和熱鬧夜晚</p></div>
-      </div>
-      <div class="stops">
-        <article class="stop"><time class="time" datetime="09:30">09:30</time><div><h3 class="place">赤崁樓 <span class="kind">古蹟・示意</span></h3><p class="description">從紅磚古城牆開始，慢慢認識台南的歷史風景。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="11:30">11:30</time><div><h3 class="place">府城小吃店（示意） <span class="kind">午餐</span></h3><p class="description">來碗暖呼呼的牛肉湯，再配幾樣在地小菜。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="14:00">14:00</time><div><h3 class="place">神農街 <span class="kind">老街・散步</span></h3><p class="description">穿過老屋與小店，留點時間拍照、逛逛巷弄。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="18:00">18:00</time><div><h3 class="place">花園夜市（示意） <span class="kind">晚餐・夜市</span></h3><p class="description">晚餐就交給大家分著吃，邊走邊挑喜歡的小吃。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-      </div>
-      <div class="trip-progress" aria-live="polite"><span class="progress-label">完成 0 / 8 站</span><div class="progress-track" role="progressbar" aria-label="行程完成進度" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="progress-fill"></div></div></div>
-    </section>
-
-    <section class="day" id="day-two" aria-labelledby="day-two-title">
-      <div class="day-heading">
-        <span class="day-number">DAY 2</span>
-        <div><h2 id="day-two-title">海風午後・甜點收尾</h2><p class="day-subtitle">從早午餐一路玩到夕陽</p></div>
-      </div>
-      <div class="stops">
-        <article class="stop"><time class="time" datetime="09:00">09:00</time><div><h3 class="place">巷口早午餐（示意） <span class="kind">早餐</span></h3><p class="description">睡飽再出門，找間舒服的小店補充元氣。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="11:00">11:00</time><div><h3 class="place">安平樹屋 <span class="kind">景點・散步</span></h3><p class="description">看看老榕樹如何攀上倉庫，在樹影裡走一圈。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="13:00">13:00</time><div><h3 class="place">安平老街午餐（示意） <span class="kind">午餐</span></h3><p class="description">挑幾樣蝦餅、豆花和在地小吃，邊吃邊逛。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-        <article class="stop"><time class="time" datetime="16:00">16:00</time><div><h3 class="place">河樂廣場 <span class="kind">散步・收尾</span></h3><p class="description">在開闊的水景旁休息一下，替旅程留個輕鬆句點。</p></div><button class="done-button" type="button" aria-pressed="false">□ 標記已完成</button></article>
-      </div>
-    </section>
-
-    <footer>行程時間為示意，大朋友可依交通與店家營業時間調整。<br>祝小旅伴和大朋友都玩得開心！</footer>
+  <main class="app">
+    <header class="topbar"><div class="brand"><div class="logo">▥</div><div><h1>專案時程</h1><p>設計工作排程與上線進度</p></div></div><div class="actions"><button class="btn" id="todayBtn">回到今天</button></div></header>
+    <section class="toolbar"><nav class="tabs"><button class="tab active">總覽</button><button class="tab">依設計師</button><button class="tab">依上線日期</button></nav><div class="toolbar-right"><div class="legend"><span><i class="dot"></i>需求至上線</span><span><i class="dot launch"></i>上線日</span></div><div class="timeline-controls"><button class="btn icon-btn" id="prevBtn" aria-label="前一週">‹</button><div class="month-label" id="monthLabel"></div><button class="btn icon-btn" id="nextBtn" aria-label="後一週">›</button></div><span class="timeline-control-label">可拖動下方捲軸往右</span><input class="search" id="search" placeholder="⌕ 搜尋專案或設計師" /></div></section>
+    <section class="board-shell"><div class="board" id="board"></div></section>
+    <div class="footer">拖動月份按鈕瀏覽其他日期 · 點選專案列可編輯 · 資料儲存在此瀏覽器</div>
   </main>
   <script>
-    const dayButtons = document.querySelectorAll('.day-nav button');
-    dayButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        document.getElementById(button.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' });
-        dayButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-      });
-    });
-
-    const doneButtons = document.querySelectorAll('.done-button');
-    const progressLabel = document.querySelector('.progress-label');
-    const progressBar = document.querySelector('[role="progressbar"]');
-    const progressFill = document.querySelector('.progress-fill');
-    doneButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const completed = button.getAttribute('aria-pressed') !== 'true';
-        button.setAttribute('aria-pressed', String(completed));
-        button.textContent = completed ? '✓ 已完成' : '□ 標記已完成';
-        button.closest('.stop').classList.toggle('is-done', completed);
-        const count = document.querySelectorAll('.done-button[aria-pressed="true"]').length;
-        progressLabel.textContent = `完成 ${count} / ${doneButtons.length} 站`;
-        progressBar.setAttribute('aria-valuenow', String(count));
-        progressFill.style.width = `${count / doneButtons.length * 100}%`;
-      });
-    });
+    const y=2026, seed=[
+      {id:'a',name:'A 專案',demand:'2026-10-12',launch:'2026-10-26',designer:'阿妹'},
+      {id:'b',name:'B 專案',demand:'2026-10-08',launch:'2026-10-20',designer:'ben'},
+      {id:'c',name:'C 專案',demand:'',launch:'2026-10-30',designer:'max'},
+      {id:'d',name:'D 專案',demand:'',launch:'2026-11-11',designer:''},
+      {id:'e',name:'E 專案',demand:'',launch:'2026-11-13',designer:''},
+      {id:'f',name:'F 專案',demand:'2026-10-19',launch:'2026-11-03',designer:'阿妹'},
+      {id:'g',name:'G 專案',demand:'2026-10-22',launch:'2026-11-06',designer:'ben'}
+    ];
+    let projects;try{projects=JSON.parse(localStorage.getItem('projectScheduleV1'))||seed}catch{projects=seed}
+    for(const sample of seed.slice(5))if(!projects.some(p=>p.id===sample.id))projects.push(sample);
+    localStorage.setItem('projectScheduleV1',JSON.stringify(projects));
+    let viewStart=new Date(2026,9,5), editing=null;
+    const $=s=>document.querySelector(s), fmt=d=>`${d.getMonth()+1}/${String(d.getDate()).padStart(2,'0')}`;
+    const parse=s=>{if(!s)return null;const [a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+    const dayDiff=(a,b)=>Math.round((new Date(a.getFullYear(),a.getMonth(),a.getDate())-new Date(b.getFullYear(),b.getMonth(),b.getDate()))/86400000);
+    const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const peopleOrder=['阿妹','ben','max','待確認'];
+    function initials(s){return s==='待確認'?'?':Array.from(s).slice(0,1).join('').toUpperCase()}
+    function render(){
+      const total=42, end=new Date(viewStart);end.setDate(end.getDate()+total-1);$('#monthLabel').textContent=viewStart.getFullYear()===end.getFullYear()&&viewStart.getMonth()===end.getMonth()?`${viewStart.getFullYear()}年${viewStart.getMonth()+1}月`:`${viewStart.getFullYear()}年${viewStart.getMonth()+1}月 – ${end.getMonth()+1}月`;
+      const dates=Array.from({length:total},(_,i)=>{const d=new Date(viewStart);d.setDate(d.getDate()+i);return d});
+      const monthSegments=[];dates.forEach((d,i)=>{let key=`${d.getFullYear()}-${d.getMonth()}`;let last=monthSegments[monthSegments.length-1];if(last&&last.key===key)last.span++;else monthSegments.push({key,label:`${d.getFullYear()}年${d.getMonth()+1}月`,span:1})});
+      const months=monthSegments.map(m=>`<span style="display:inline-block;flex:0 0 calc(var(--day) * ${m.span})">${m.label}</span>`).join('');
+      const days=dates.map((d,i)=>`<div class="${[0,6].includes(d.getDay())?'weekend ':''}${d.toDateString()===new Date().toDateString()?'today':''}"><b>${d.getDate()}</b><span>${['日','一','二','三','四','五','六'][d.getDay()]}</span></div>`).join('');
+      const filter=$('#search').value.trim().toLowerCase(); const names=[...new Set(projects.map(p=>p.designer||'待確認'))];
+      const colorIdx=n=>['','a2','a3','a4','a5'][Math.max(0,names.indexOf(n))%5];
+      let html=`<div class="section-headings"><div class="section-heading"><span class="num">1</span>所有專案</div><div class="section-heading"><span class="num">2</span>設計者與執行專案</div><div class="section-heading"><span class="num">3</span>時間軸</div></div><div class="calendar-head"><div class="project-head"><span>專案名稱</span><span>需求提供日</span><span>上線時間</span></div><div class="designer-head">負責設計師 · 執行專案</div><div class="timeline-head"><div class="months">${months}</div><div class="days">${days}</div></div></div>`;
+      const assignedProjects=projects.filter(p=>p.designer&&p.designer.trim());
+      const projectsByDesigner=[...new Set(assignedProjects.map(p=>p.designer))].map(name=>({name,items:assignedProjects.filter(p=>p.designer===name)}));
+      projectsByDesigner.forEach(group=>{const visible=group.items.filter(p=>(p.name+' '+group.name).toLowerCase().includes(filter));if(!visible.length)return;const designer=group.name,color=colorIdx(designer);let entries=visible.map((p,i)=>`<div class="designer-entry ${i===0?'first':''}">${i===0?`<span class="designer-person"><i class="avatar ${color}">${esc(initials(designer))}</i><span>${esc(designer)}</span></span>`:`<span class="designer-person" style="visibility:hidden"><i class="avatar ${color}">${esc(initials(designer))}</i><span>${esc(designer)}</span></span>`}<span class="designer-project">${esc(p.name)}</span></div>`).join('');html+=`<div class="project-row designer-group-row"><div class="project-info designer-project-list">${visible.map(p=>`<div class="project-card-line"><span>${esc(p.name)}</span><span class="cell date ${p.demand?'':'pending'}">${p.demand?fmt(parse(p.demand)):'待確認'}</span><span class="cell date">${fmt(parse(p.launch))}</span></div>`).join('')}</div><div class="designer-info"><div class="designer-stack">${entries}</div></div><div class="timeline-group">${visible.map(p=>{const demand=parse(p.demand),launch=parse(p.launch);let start=demand||new Date(launch);if(!demand)start.setDate(start.getDate()-4);let left=dayDiff(start,viewStart),width=demand?Math.max(1,dayDiff(launch,demand)+1):Math.max(2,dayDiff(launch,start));let launchLeft=dayDiff(launch,viewStart),barLeft=Math.max(0,left),barRight=Math.min(total,left+width),barWidth=Math.max(0,barRight-barLeft);const weekendBands=dates.map((d,i)=>[0,6].includes(d.getDay())?`<i class="weekend-band" style="left:calc(var(--day) * ${i});width:var(--day)"></i>`:'').join('');return `<div class="timeline-row"><div class="track" style="width:calc(var(--day) * ${total})">${weekendBands}${barWidth>0?`<div class="bar ${demand?'demand':'muted'}" style="left:calc(var(--day) * ${barLeft});width:calc(var(--day) * ${barWidth} - 5px)">${demand?esc(p.name):'待確認需求日'}<span class="bar-tag">${demand?width+' 天':'待排程'}</span></div>`:''}<div class="bar launch" style="left:calc(var(--day) * ${launchLeft});width:calc(var(--day) * .9 - 2px)">上線</div></div></div>`}).join('')}</div></div>`});
+      /* legacy row rendering removed */
+      if(!projects.length)html+=`<div class="empty">還沒有專案，按「新增專案」開始建立排程。</div>`;
+      $('#board').innerHTML=html;
+    }
+    function save(){localStorage.setItem('projectScheduleV1',JSON.stringify(projects));render()}
+    $('#prevBtn').onclick=()=>{viewStart.setDate(viewStart.getDate()-14);render()};$('#nextBtn').onclick=()=>{viewStart.setDate(viewStart.getDate()+14);render()};$('#todayBtn').onclick=()=>{const now=new Date();viewStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-7);render()};$('#search').oninput=render;
+    render();
   </script>
 </body>
 </html>
