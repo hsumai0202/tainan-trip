@@ -1,76 +1,507 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7f8fa" />
-  <title>專案時程｜工作排程</title>
-  <style>
-    :root{--ink:#242b36;--muted:#818a99;--line:#e8ebf0;--bg:#f5f6f8;--purple:#7867e8;--left:660px;--day:44px}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink);font-size:13px}
-    button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;padding:26px 30px 40px;max-width:1900px;margin:auto}
-    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{height:38px;width:38px;border-radius:12px;background:#eeeaff;color:var(--purple);display:grid;place-items:center;font-size:20px}.brand h1{font-size:20px;margin:0 0 3px;letter-spacing:-.3px}.brand p{margin:0;color:var(--muted);font-size:12px}.actions{display:flex;gap:9px;align-items:center}.btn{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:white;color:#515b69;font-weight:600;box-shadow:0 1px 2px #18223008}.btn:hover{background:#fafaff;border-color:#d8d2fb}.btn.primary{background:var(--purple);border-color:var(--purple);color:white}.btn.primary:hover{background:#6858d5}.icon-btn{width:36px;height:36px;padding:0;font-size:16px}
-    .toolbar{background:#fff;border:1px solid var(--line);border-radius:12px 12px 0 0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}.tabs{display:flex;gap:7px}.tab{border:0;background:transparent;padding:9px 12px;color:#858d9b;border-radius:8px;font-weight:600}.tab.active{background:#f0edff;color:#6555cf}.toolbar-right{display:flex;align-items:center;gap:10px}.search{border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:185px;outline:none}.search:focus{border-color:#a79df0}.month-label{font-weight:700;min-width:106px;text-align:center;font-size:14px}.legend{display:flex;gap:14px;color:#717b89;font-size:11px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:8px;height:8px;border-radius:3px;background:#b0a5ff}.dot.launch{background:#ffc879}.timeline-controls{display:flex;align-items:center;gap:7px}.timeline-control-label{font-size:10px;color:#969daa;margin-left:3px}
-    .board-shell{border:1px solid var(--line);border-top:0;background:#fff;border-radius:0 0 12px 12px;overflow-x:auto;overflow-y:hidden;box-shadow:0 8px 28px #1e293b09}.board{min-width:0;--project-col:minmax(400px,1.2fr);--designer-col:minmax(250px,.8fr);--timeline-col:calc(var(--day) * 42)}.section-headings{display:grid;grid-template-columns:var(--project-col) var(--designer-col) var(--timeline-col);background:#fcfcfd;border-bottom:1px solid var(--line)}.section-heading{height:39px;display:flex;align-items:center;padding:0 16px;color:#677180;font-size:11px;font-weight:750;letter-spacing:.2px}.section-heading+.section-heading{border-left:1px solid var(--line)}.section-heading .num{width:19px;height:19px;display:grid;place-items:center;border-radius:6px;background:#efedff;color:#695bd1;margin-right:8px;font-size:10px}.calendar-head,.project-row{display:grid;grid-template-columns:var(--project-col) var(--designer-col) var(--timeline-col)}.project-head{min-height:45px;display:grid;grid-template-columns:minmax(110px,1.3fr) 105px 105px;align-items:center;padding:0 15px;color:#9299a6;font-size:10px;font-weight:700}.designer-head{min-height:45px;padding:0 15px;display:flex;align-items:center;color:#9299a6;font-size:10px;font-weight:700;border-left:1px solid var(--line)}.timeline-head{overflow:hidden;position:relative;border-left:1px solid var(--line)}.timeline-cell{height:100%;min-height:86px;overflow:hidden;border-left:1px solid var(--line)}.months{width:calc(var(--day) * 42);height:39px;border-bottom:1px solid var(--line);display:flex;align-items:center;color:#596373;font-weight:700;font-size:12px;white-space:nowrap}.days{width:calc(var(--day) * 42);height:40px;display:grid;grid-auto-columns:var(--day);grid-auto-flow:column;text-align:center;align-items:center;color:#87909d;font-size:11px}.days div{height:40px;border-left:1px solid #f0f1f4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}.days b{font-size:11px;color:#485362}.days .weekend{background:#fafbfc}.days .today b{color:var(--purple)}.days .today:after{content:"";height:3px;width:15px;border-radius:3px;background:var(--purple);margin-top:1px}
-    .project-group{display:contents}.project-row{min-height:86px;border-top:0}.designer-info{display:flex;align-items:flex-start;padding:12px 15px;border-left:1px solid var(--line);min-width:0}.designer-stack{display:flex;flex-direction:column;gap:8px;min-width:0}.designer-entry{display:flex;align-items:center;min-height:26px;gap:8px}.designer-entry.first{margin-bottom:2px}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-person span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.designer-project{padding:5px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.project-info{display:grid;grid-template-columns:minmax(110px,1fr) 64px 64px;align-items:center;margin:8px 6px 8px 8px;padding:9px 7px;gap:3px;min-height:70px;border:1px solid #eceaf7;border-radius:11px;background:#fff;box-shadow:0 2px 7px #27204409}.name-wrap{min-width:0}.project-name{font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#303746}.cell{font-size:11px;color:#687281}.date{font-variant-numeric:tabular-nums}.date.pending{color:#aaa3cb}.project-card-line{display:grid;grid-template-columns:minmax(110px,1fr) 64px 64px;gap:3px;align-items:center;min-height:70px;margin:8px 6px 8px 8px;padding:9px 7px;border:1px solid #eceaf7;border-radius:11px;background:#fff;box-shadow:0 2px 7px #27204409;font-weight:700}.designer-project-list{display:flex;flex-direction:column;gap:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;min-height:0}.designer-info{display:flex;align-items:flex-start;padding:0 15px;border-left:1px solid var(--line);min-width:0}.designer-stack{display:flex;flex-direction:column;gap:0}.designer-entry{display:flex;align-items:center;min-height:86px;gap:8px}.designer-entry.first{margin-bottom:0}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-project{padding:5px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.timeline-group{border-left:1px solid var(--line)}.timeline-row{height:86px;border-bottom:1px solid #f0f1f3}.timeline-row .track{height:86px}.designer-person{display:flex;align-items:center;gap:8px;min-width:80px;max-width:108px;font-size:11px;font-weight:650}.designer-person span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.assigned-project{margin-left:7px;padding:6px 9px;border-radius:7px;background:#f4f2ff;color:#6556c7;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.avatar{height:23px;width:23px;flex:0 0 23px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:700;background:#eeeaff;color:#6758d0}.avatar.a2{background:#e4f4ef;color:#39866e}.avatar.a3{background:#fff0e3;color:#c27b36}.avatar.a4{background:#eaf1ff;color:#5474bd}.avatar.a5{background:#ffe9ed;color:#bb6374}.track{height:100%;min-height:86px;position:relative;background-image:linear-gradient(to right,#eff0f3 1px,transparent 1px);background-size:var(--day) 100%;background-position:left top}.track .weekend-band{position:absolute;top:0;bottom:0;background:#fafbfc;pointer-events:none}.bar{height:25px;position:absolute;top:17px;border-radius:7px;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px;font-weight:650;box-shadow:0 2px 4px #232b3610;z-index:2}.bar.demand{background:#e9e5ff;color:#5e50bd}.bar.launch{background:#fff0d7;color:#ab711e;top:52px;height:21px;font-size:9px}.bar.muted{background:#f1f2f5;color:#8c94a0;border:1px dashed #d4d8df;box-shadow:none}.bar .bar-tag{margin-left:auto;padding-left:8px;opacity:.72}.project-row.hidden{display:none}.empty{padding:40px;text-align:center;color:#949ba7}.footer{color:#969daa;font-size:11px;padding:13px 3px}
-    .modal-backdrop{position:fixed;inset:0;background:#1e24304d;display:none;align-items:center;justify-content:center;z-index:10;padding:20px}.modal-backdrop.open{display:flex}.modal{background:#fff;width:min(460px,100%);border-radius:14px;padding:22px;box-shadow:0 20px 60px #14192740}.modal h2{font-size:17px;margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#707a88;font-weight:700}.field input,.field select{border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink);background:white}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:21px}.delete{margin-right:auto;color:#bd5360}.close{background:none;border:0;font-size:20px;color:#87909d;float:right;line-height:1}
-    /* compact viewing layout */
-    .project-row{min-height:58px}
-    .project-info{margin:2px 4px 2px 6px;min-height:52px;padding:6px 6px}
-    .project-card-line{min-height:52px;margin:2px 4px 2px 6px;padding:6px 6px}
-    .designer-entry{min-height:58px}
-    .timeline-row,.timeline-row .track,.timeline-cell{height:58px;min-height:58px}
-    .bar{top:7px}.bar.launch{top:34px}
-    .project-head,.designer-head{min-height:36px}
-    @media(max-width:760px){.app{padding:17px 12px 28px}.topbar{align-items:flex-start;gap:12px}.brand h1{font-size:17px}.actions .btn:not(.primary){display:none}.toolbar{align-items:flex-start;gap:12px;flex-direction:column}.toolbar-right{width:100%;justify-content:space-between}.search{width:145px}.board{--project-col:285px;--designer-col:240px;--timeline-col:calc(var(--day) * 42)}.project-head,.project-info{grid-template-columns:minmax(90px,1fr) 58px 58px;gap:3px}.project-info{margin:7px 5px;padding:8px 6px}:root{--day:40px}}
-  </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar"><div class="brand"><div class="logo">▥</div><div><h1>專案時程</h1><p>設計工作排程與上線進度</p></div></div><div class="actions"><button class="btn" id="todayBtn">回到今天</button></div></header>
-    <section class="toolbar"><nav class="tabs"><button class="tab active">總覽</button><button class="tab">依設計師</button><button class="tab">依上線日期</button></nav><div class="toolbar-right"><div class="legend"><span><i class="dot"></i>需求至上線</span><span><i class="dot launch"></i>上線日</span></div><div class="timeline-controls"><button class="btn icon-btn" id="prevBtn" aria-label="前一週">‹</button><div class="month-label" id="monthLabel"></div><button class="btn icon-btn" id="nextBtn" aria-label="後一週">›</button></div><span class="timeline-control-label">可拖動下方捲軸往右</span><input class="search" id="search" placeholder="⌕ 搜尋專案或設計師" /></div></section>
-    <section class="board-shell"><div class="board" id="board"></div></section>
-    <div class="footer">拖動月份按鈕瀏覽其他日期 · 點選專案列可編輯 · 資料儲存在此瀏覽器</div>
-  </main>
-  <script>
-    const y=2026, seed=[
-      {id:'a',name:'A 專案',demand:'2026-10-12',launch:'2026-10-26',designer:'阿妹'},
-      {id:'b',name:'B 專案',demand:'2026-10-08',launch:'2026-10-20',designer:'ben'},
-      {id:'c',name:'C 專案',demand:'',launch:'2026-10-30',designer:'max'},
-      {id:'d',name:'D 專案',demand:'',launch:'2026-11-11',designer:''},
-      {id:'e',name:'E 專案',demand:'',launch:'2026-11-13',designer:''},
-      {id:'f',name:'F 專案',demand:'2026-10-19',launch:'2026-11-03',designer:'阿妹'},
-      {id:'g',name:'G 專案',demand:'2026-10-22',launch:'2026-11-06',designer:'ben'}
-    ];
-    let projects;try{projects=JSON.parse(localStorage.getItem('projectScheduleV1'))||seed}catch{projects=seed}
-    for(const sample of seed.slice(5))if(!projects.some(p=>p.id===sample.id))projects.push(sample);
-    localStorage.setItem('projectScheduleV1',JSON.stringify(projects));
-    let viewStart=new Date(2026,9,5), editing=null;
-    const $=s=>document.querySelector(s), fmt=d=>`${d.getMonth()+1}/${String(d.getDate()).padStart(2,'0')}`;
-    const parse=s=>{if(!s)return null;const [a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
-    const dayDiff=(a,b)=>Math.round((new Date(a.getFullYear(),a.getMonth(),a.getDate())-new Date(b.getFullYear(),b.getMonth(),b.getDate()))/86400000);
-    const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const peopleOrder=['阿妹','ben','max','待確認'];
-    function initials(s){return s==='待確認'?'?':Array.from(s).slice(0,1).join('').toUpperCase()}
-    function render(){
-      const total=42, end=new Date(viewStart);end.setDate(end.getDate()+total-1);$('#monthLabel').textContent=viewStart.getFullYear()===end.getFullYear()&&viewStart.getMonth()===end.getMonth()?`${viewStart.getFullYear()}年${viewStart.getMonth()+1}月`:`${viewStart.getFullYear()}年${viewStart.getMonth()+1}月 – ${end.getMonth()+1}月`;
-      const dates=Array.from({length:total},(_,i)=>{const d=new Date(viewStart);d.setDate(d.getDate()+i);return d});
-      const monthSegments=[];dates.forEach((d,i)=>{let key=`${d.getFullYear()}-${d.getMonth()}`;let last=monthSegments[monthSegments.length-1];if(last&&last.key===key)last.span++;else monthSegments.push({key,label:`${d.getFullYear()}年${d.getMonth()+1}月`,span:1})});
-      const months=monthSegments.map(m=>`<span style="display:inline-block;flex:0 0 calc(var(--day) * ${m.span})">${m.label}</span>`).join('');
-      const days=dates.map((d,i)=>`<div class="${[0,6].includes(d.getDay())?'weekend ':''}${d.toDateString()===new Date().toDateString()?'today':''}"><b>${d.getDate()}</b><span>${['日','一','二','三','四','五','六'][d.getDay()]}</span></div>`).join('');
-      const filter=$('#search').value.trim().toLowerCase(); const names=[...new Set(projects.map(p=>p.designer||'待確認'))];
-      const colorIdx=n=>['','a2','a3','a4','a5'][Math.max(0,names.indexOf(n))%5];
-      let html=`<div class="section-headings"><div class="section-heading"><span class="num">1</span>所有專案</div><div class="section-heading"><span class="num">2</span>設計者與執行專案</div><div class="section-heading"><span class="num">3</span>時間軸</div></div><div class="calendar-head"><div class="project-head"><span>專案名稱</span><span>需求提供日</span><span>上線時間</span></div><div class="designer-head">負責設計師 · 執行專案</div><div class="timeline-head"><div class="months">${months}</div><div class="days">${days}</div></div></div>`;
-      const assignedProjects=projects.filter(p=>p.designer&&p.designer.trim());
-      const projectsByDesigner=[...new Set(assignedProjects.map(p=>p.designer))].map(name=>({name,items:assignedProjects.filter(p=>p.designer===name)}));
-      projectsByDesigner.forEach(group=>{const visible=group.items.filter(p=>(p.name+' '+group.name).toLowerCase().includes(filter));if(!visible.length)return;const designer=group.name,color=colorIdx(designer);let entries=visible.map((p,i)=>`<div class="designer-entry ${i===0?'first':''}">${i===0?`<span class="designer-person"><i class="avatar ${color}">${esc(initials(designer))}</i><span>${esc(designer)}</span></span>`:`<span class="designer-person" style="visibility:hidden"><i class="avatar ${color}">${esc(initials(designer))}</i><span>${esc(designer)}</span></span>`}<span class="designer-project">${esc(p.name)}</span></div>`).join('');html+=`<div class="project-row designer-group-row"><div class="project-info designer-project-list">${visible.map(p=>`<div class="project-card-line"><span>${esc(p.name)}</span><span class="cell date ${p.demand?'':'pending'}">${p.demand?fmt(parse(p.demand)):'待確認'}</span><span class="cell date">${fmt(parse(p.launch))}</span></div>`).join('')}</div><div class="designer-info"><div class="designer-stack">${entries}</div></div><div class="timeline-group">${visible.map(p=>{const demand=parse(p.demand),launch=parse(p.launch);let start=demand||new Date(launch);if(!demand)start.setDate(start.getDate()-4);let left=dayDiff(start,viewStart),width=demand?Math.max(1,dayDiff(launch,demand)+1):Math.max(2,dayDiff(launch,start));let launchLeft=dayDiff(launch,viewStart),barLeft=Math.max(0,left),barRight=Math.min(total,left+width),barWidth=Math.max(0,barRight-barLeft);const weekendBands=dates.map((d,i)=>[0,6].includes(d.getDay())?`<i class="weekend-band" style="left:calc(var(--day) * ${i});width:var(--day)"></i>`:'').join('');return `<div class="timeline-row"><div class="track" style="width:calc(var(--day) * ${total})">${weekendBands}${barWidth>0?`<div class="bar ${demand?'demand':'muted'}" style="left:calc(var(--day) * ${barLeft});width:calc(var(--day) * ${barWidth} - 5px)">${demand?esc(p.name):'待確認需求日'}<span class="bar-tag">${demand?width+' 天':'待排程'}</span></div>`:''}<div class="bar launch" style="left:calc(var(--day) * ${launchLeft});width:calc(var(--day) * .9 - 2px)">上線</div></div></div>`}).join('')}</div></div>`});
-      /* legacy row rendering removed */
-      if(!projects.length)html+=`<div class="empty">還沒有專案，按「新增專案」開始建立排程。</div>`;
-      $('#board').innerHTML=html;
-    }
-    function save(){localStorage.setItem('projectScheduleV1',JSON.stringify(projects));render()}
-    $('#prevBtn').onclick=()=>{viewStart.setDate(viewStart.getDate()-14);render()};$('#nextBtn').onclick=()=>{viewStart.setDate(viewStart.getDate()+14);render()};$('#todayBtn').onclick=()=>{const now=new Date();viewStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-7);render()};$('#search').oninput=render;
-    render();
-  </script>
-</body>
-</html>
+<title>聖誕交換禮物場景轉盤</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: wheel on the left; "who are you" → result → roster on the right; owner records + gift catalogue below. Single deliberate night-pine look. */
+:root{
+  --pine:#0e2620; --pine-2:#163a30; --pine-3:#1f4b3e;
+  --snow:#f4efe4; --frost:#a9c2b6; --gold:#e9b649; --berry:#c73a45; --berry-soft:#3a1d22;
+  --display:"LXGW WenKai TC","Kaiti TC","STKaiti","Noto Serif TC",serif;
+  --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--pine);color:var(--snow);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:28px 56px;
+  background-image:radial-gradient(circle at 15% 0%, #1d4a3c 0, transparent 45%),radial-gradient(circle at 90% 30%, #2a1a1e 0, transparent 40%);
+  background-attachment:fixed;
+}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{color:var(--frost);margin:0;max-width:62ch}
+.rules{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{border:1px solid var(--pine-3);border-radius:999px;padding:3px 12px;font-size:13px;color:var(--frost)}
+.chip b{color:var(--snow);font-weight:500}
+.notice{border:1px dashed var(--gold);color:var(--gold);border-radius:12px;padding:8px 14px;font-size:14px}
+
+/* one column: who-are-you card, then the wheel, then the roster */
+.stage{display:flex;flex-direction:column;gap:24px;width:100%;max-width:640px;margin:0 auto}
+.stage > *{width:100%}
+.wheel-col{display:flex;flex-direction:column;align-items:center;gap:18px}
+.wheel-box{position:relative;width:100%;max-width:480px;aspect-ratio:1}
+#wheel{width:100%;height:100%;display:block}
+.pointer{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:0;height:0;
+  border-left:16px solid transparent;border-right:16px solid transparent;border-top:30px solid var(--gold);
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));z-index:2}
+.turn{font-family:var(--display);font-size:20px;text-align:center}
+.turn span{color:var(--gold)}
+.btn{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--pine-3);background:var(--pine-2);color:var(--snow);padding:8px 18px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--frost)}
+.btn:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-spin{background:var(--berry);border-color:var(--berry);font-family:var(--display);font-size:22px;padding:12px 44px;font-weight:700;letter-spacing:.08em;box-shadow:0 6px 0 #7e1f28}
+.btn-spin:hover:not(:disabled){background:#d74651}
+.btn-spin:active:not(:disabled){transform:translateY(3px);box-shadow:0 3px 0 #7e1f28}
+.btn-light{background:var(--snow);color:var(--pine);border-color:var(--snow);font-weight:700}
+.btn-light:hover{background:#fff}
+.opts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;color:var(--frost);font-size:14px}
+.opts label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.opts input{accent-color:var(--gold);width:16px;height:16px}
+
+.side{display:flex;flex-direction:column;gap:20px;min-width:0}
+.card{background:var(--pine-2);border:1px solid var(--pine-3);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.step{font-size:12px;letter-spacing:.14em;color:var(--gold)}
+.card h2{font-family:var(--display);font-size:clamp(26px,4vw,36px);margin:0;line-height:1.15}
+.card .desc{margin:0;color:var(--frost)}
+.who-form{display:flex;gap:10px;flex-wrap:wrap}
+.who-form input{flex:1 1 180px;min-width:0;font:inherit;font-size:18px;color:var(--snow);background:var(--pine);border:1px solid var(--pine-3);border-radius:12px;padding:10px 14px}
+.err{color:#ff9aa2;font-size:14px;margin:0}
+.result::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--scene-c,var(--gold));opacity:.14}
+.result h2 span{color:var(--scene-c,var(--gold))}
+.picks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:460px){.picks{grid-template-columns:1fr}}
+.pick{background:var(--pine);border:1px solid var(--pine-3);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.pick b{font-weight:700}
+.pick .price{font-size:13px;color:var(--gold);font-variant-numeric:tabular-nums}
+.pick .why{font-size:13px;color:var(--frost)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.saved{font-size:13px;color:var(--frost)}
+
+.roster{border:1px solid var(--pine-3);border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.roster-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.roster h3{font-family:var(--display);font-size:20px;margin:0}
+.count{font-size:13px;border-radius:999px;padding:2px 12px;background:var(--pine-2);font-variant-numeric:tabular-nums}
+.names{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.names li{border-radius:999px;padding:3px 12px;background:var(--gold);color:var(--pine);font-size:14px}
+.names li.wait{background:transparent;color:var(--frost);border:1px dashed var(--pine-3)}
+
+.host{border:1px solid var(--gold);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.host h2{font-family:var(--display);font-size:24px;margin:0}
+.host p{margin:0;color:var(--frost);font-size:14px}
+.tally{display:flex;gap:6px;flex-wrap:wrap}
+.tally span{font-size:13px;border-radius:999px;padding:2px 10px;background:var(--pine-2);font-variant-numeric:tabular-nums}
+.tally i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--pine-3)}
+th{color:var(--frost);font-weight:500;font-size:13px}
+td.t{font-variant-numeric:tabular-nums;color:var(--frost)}
+
+.catalog h2{font-family:var(--display);font-size:28px;margin:0 0 4px}
+.catalog > p{color:var(--frost);margin:0 0 16px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab[aria-selected="true"]{background:var(--snow);color:var(--pine);border-color:var(--snow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.grid .pick{background:var(--pine-2)}
+footer{color:var(--frost);font-size:13px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Christmas Gift Exchange · 2026</div>
+    <h1>轉到哪個<em>場景</em>，就買哪裡用得到的禮物</h1>
+    <p class="lede">在自己的手機或電腦上打開這頁，輸入名字，轉一次轉盤。轉到哪個場景就照這個場景挑禮物，下面會直接推薦幾樣適合的東西。結果會自動記錄，之後再打開這頁也看得到自己的場景。</p>
+    <div class="rules">
+      <span class="chip">人數 <b>7 人</b></span>
+      <span class="chip">預算 <b>NT$500 以上，不設上限</b></span>
+      <span class="chip">場景 <b>廚房・客廳・臥房・出門使用・辦公室（書房）</b></span>
+    </div>
+    <div class="notice" id="notice" hidden></div>
+  </header>
+
+  <section class="stage">
+    <div class="card" id="card" aria-live="polite"></div>
+    <div class="wheel-col">
+      <div class="wheel-box">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" role="img" aria-label="場景轉盤：廚房、客廳、臥房、出門使用、辦公室（書房）"></canvas>
+      </div>
+      <div class="turn" id="turn">請先輸入你的名字</div>
+      <button class="btn btn-spin" id="spin" disabled>轉！</button>
+      <div class="opts">
+        <label><input type="checkbox" id="balanced" checked> 場景平均分配（每個場景最多 2 人）</label>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="roster">
+        <div class="roster-head">
+          <h3>已經轉過的人</h3>
+          <span class="count" id="count">0 / 7</span>
+        </div>
+        <ul class="names" id="names"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="host" id="host" hidden>
+    <h2>主辦人紀錄</h2>
+    <p>只有你（這頁的擁有者）看得到這一區。有人要重轉，在這裡刪掉他的紀錄，他的頁面就會回到可以轉的狀態。</p>
+    <div class="tally" id="tally"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名字</th><th>場景</th><th>時間</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="catalog">
+    <h2>各場景禮物點子</h2>
+    <p>價格是台灣常見售價區間，實際以購買時為準。</p>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <footer>轉盤結果會記錄在這個頁面的共用紀錄裡。</footer>
+</div>
+
+<script>
+const TOTAL = 7;
+const SCENES = [
+  { key:"kitchen", name:"廚房", label:["廚房"], color:"#c73a45", text:"#fff6ee",
+    desc:"煮飯、泡咖啡、做點心時用得到的東西。",
+    gifts:[
+      ["氣炸鍋","NT$1,500–3,500","不用開油鍋就能做炸物，小家庭也很實用"],
+      ["手沖咖啡入門組","NT$800–1,600","濾杯、細口壺、濾紙一次配齊"],
+      ["琺瑯鑄鐵鍋","NT$1,200–3,500","燉煮、燒烤都行，外型直接上桌"],
+      ["溫控快煮壺","NT$900–2,200","可設定水溫，泡茶沖咖啡都剛好"],
+      ["電動奶泡機","NT$600–1,500","在家做拿鐵、熱可可"],
+      ["主廚刀或日式三德刀","NT$800–2,500","好刀切起來真的差很多"],
+      ["隨行果汁機","NT$900–1,800","打完直接帶走，早餐很方便"],
+      ["小型電子鍋","NT$1,200–3,000","1 到 3 人份，煮飯煮粥都快"],
+      ["多功能電烤盤","NT$1,500–3,500","火鍋、燒烤、章魚燒一台搞定"],
+      ["燜燒罐","NT$600–1,300","早上放料，中午就有熱湯"],
+      ["質感餐具組","NT$600–1,500","碗盤杯一套，拍照也好看"],
+      ["烘焙工具組","NT$500–1,000","電子秤、量杯、矽膠刮刀組合"]
+    ]},
+  { key:"living", name:"客廳", label:["客廳"], color:"#e9b649", text:"#2a1d06",
+    desc:"放鬆、聊天、看電視或招待朋友時用的。",
+    gifts:[
+      ["擴香石或擴香瓶組","NT$600–1,500","整個空間都有香味"],
+      ["藍牙喇叭","NT$800–3,000","放音樂、看劇音效都升級"],
+      ["針織或法蘭絨毯","NT$500–1,200","冬天窩沙發必備"],
+      ["派對桌遊","NT$600–1,500","朋友來家裡馬上有得玩"],
+      ["1000 片拼圖加拼圖墊","NT$500–1,000","假日慢慢拼，完成可以裱框"],
+      ["氛圍燈或落日燈","NT$600–1,500","晚上開一盞氣氛就出來"],
+      ["小型空氣清淨機","NT$1,500–3,500","過敏或有養寵物的人很需要"],
+      ["按摩靠墊","NT$1,000–2,500","坐在沙發上就能按肩頸"],
+      ["觀葉植物加質感盆器","NT$500–1,200","好養又能讓客廳有綠意"],
+      ["相片印表機","NT$2,500–4,500","手機照片直接印出來貼牆"],
+      ["無線吸塵器","NT$2,500–5,000","預算多一點的大禮"]
+    ]},
+  { key:"bedroom", name:"臥房", label:["臥房"], color:"#7fb79a", text:"#0e2620",
+    desc:"睡前、起床、在房間休息時用的。",
+    gifts:[
+      ["記憶枕或人體工學枕","NT$800–2,500","睡得好，隔天精神才會好"],
+      ["日出喚醒燈","NT$1,000–2,500","用光線慢慢叫醒，不靠鬧鐘"],
+      ["蒸氣眼罩加助眠精油","NT$500–900","睡前放鬆組合"],
+      ["桌上型加濕器","NT$800–2,000","冬天開冷暖氣不怕乾"],
+      ["絲質或天絲枕套","NT$800–1,600","對頭髮和皮膚比較友善"],
+      ["電熱毯","NT$800–1,800","寒流來的時候最有感"],
+      ["居家服或睡衣","NT$800–1,800","選柔軟好洗的材質"],
+      ["白噪音機","NT$800–1,500","淺眠的人很適合"],
+      ["無線充電床頭夜燈","NT$700–1,500","手機放上去充電，順便當夜燈"],
+      ["肩頸按摩器","NT$1,000–2,500","睡前按一下比較好睡"]
+    ]},
+  { key:"outdoor", name:"出門使用", label:["出門","使用"], color:"#f4efe4", text:"#0e2620",
+    desc:"通勤、上班、旅行或運動帶在身上的。",
+    gifts:[
+      ["保溫瓶","NT$600–1,300","一年四季都用得到"],
+      ["輕量行動電源","NT$600–1,500","出門手機不怕沒電"],
+      ["真無線藍牙耳機","NT$1,000–4,000","通勤聽音樂、講電話"],
+      ["通勤後背包","NT$1,000–3,000","有筆電夾層和防潑水"],
+      ["自動摺疊傘","NT$500–1,000","單手開收，抗風款更好"],
+      ["羊毛圍巾或手套","NT$600–1,500","冬天出門的保暖組"],
+      ["充電式暖暖蛋","NT$600–1,200","暖手兼行動電源"],
+      ["旅行收納袋組","NT$500–1,000","出國或出差打包很整齊"],
+      ["智慧手環","NT$1,000–2,500","記錄步數、睡眠、心率"],
+      ["斜背隨身包","NT$800–2,000","放手機錢包鑰匙剛好"]
+    ]},
+  { key:"office", name:"辦公室（書房）", label:["辦公室","書房"], color:"#9db4e0", text:"#0e2620",
+    desc:"上班、讀書、在書桌前工作時用的。",
+    gifts:[
+      ["螢幕掛燈","NT$1,000–2,500","照亮桌面又不反光，長時間看螢幕比較不累"],
+      ["機械式鍵盤","NT$1,200–3,500","打字手感好，很多人用了就回不去"],
+      ["人體工學無線滑鼠","NT$800–2,500","手腕比較不會痠"],
+      ["筆電支架","NT$600–1,500","把螢幕墊高，脖子不用一直低著"],
+      ["人體工學腰靠或腳踏墊","NT$800–2,000","久坐的人很需要"],
+      ["鋼筆加筆記本組","NT$800–2,000","寫字有質感，送禮也體面"],
+      ["加熱保溫杯墊","NT$600–1,200","咖啡茶放著也不會冷掉"],
+      ["皮革大桌墊","NT$500–1,200","鍵盤滑鼠一起放，桌面整齊"],
+      ["桌面收納組","NT$500–1,200","文具、充電線不再亂成一團"],
+      ["暖腳器或桌下電暖器","NT$800–2,000","冬天在辦公室坐著不腳冷"],
+      ["電子書閱讀器","NT$3,000–5,500","預算多一點的大禮，愛看書的人會很開心"]
+    ]}
+];
+const SLICES = [0,1,2,3,4,0,1,2,3,4];
+const SEG = 360 / SLICES.length;
+const sceneIndex = k => SCENES.findIndex(s=>s.key===k);
+
+let records = [];          // [{id, name, scene, at}]
+let db = null, spinsCol = null, isOwner = false, dbReady = false, myId = null;
+let mineShown = false;
+function lsGet(){ try{ return JSON.parse(localStorage.getItem("xmas-scene-mine")||"null"); }catch(e){ return null; } }
+function lsSet(v){ try{ localStorage.setItem("xmas-scene-mine", JSON.stringify(v)); }catch(e){} }
+function myRecord(){
+  if(myId){ const r = records.find(r=>r.uid===myId); if(r) return r; }
+  const local = lsGet();
+  if(local) return records.find(r=>r.id===local.id) || null;
+  return null;
+}
+function showMine(r){
+  const si = sceneIndex(r.scene); if(si<0) return;
+  const local = lsGet();
+  const picks = local && local.id===r.id && Array.isArray(local.picks) ? local.picks : samplePicks(si);
+  player = r.name; mineShown = true;
+  lastResult = { name:r.name, si, picks, saved:"ok", returning:true };
+  $("spin").disabled = true;
+  renderResult();
+}
+let player = null;         // current player's name
+let rotation = 0, spinning = false, catTab = 0, lastResult = null;
+
+const $ = id => document.getElementById(id);
+const canvas = $("wheel"), ctx = canvas.getContext("2d");
+const norm = s => s.trim().replace(/\s+/g," ").toLowerCase();
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function note(msg){ const n=$("notice"); n.hidden=!msg; n.textContent=msg||""; }
+
+/* ---------- wheel ---------- */
+function sizeCanvas(){
+  const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio||1;
+  canvas.width = Math.round(r.width*dpr); canvas.height = Math.round(r.height*dpr);
+  draw();
+}
+function draw(){
+  const W = canvas.width, c = W/2, R = c*0.96;
+  if(!W) return;
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,W,W);
+  ctx.translate(c,c); ctx.rotate(rotation*Math.PI/180);
+  ctx.beginPath(); ctx.arc(0,0,R,0,Math.PI*2); ctx.fillStyle="#0a1c17"; ctx.fill();
+  const r = R*0.93;
+  SLICES.forEach((si,i)=>{
+    const sc = SCENES[si];
+    const a0 = (-90 + i*SEG)*Math.PI/180, a1 = (-90 + (i+1)*SEG)*Math.PI/180;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,r,a0,a1); ctx.closePath();
+    ctx.fillStyle = sc.color; ctx.fill();
+    ctx.strokeStyle="#0a1c17"; ctx.lineWidth = W*0.006; ctx.stroke();
+    ctx.save(); ctx.rotate((a0+a1)/2);
+    ctx.fillStyle = sc.text; ctx.textAlign="right"; ctx.textBaseline="middle";
+    const lines = sc.label, fs = (lines.length>1 ? 0.046 : 0.06)*W;
+    ctx.font = `700 ${fs}px "LXGW WenKai TC","Noto Sans TC",serif`;
+    lines.forEach((t,k)=>ctx.fillText(t, r*0.9, (k-(lines.length-1)/2)*fs*1.1));
+    ctx.restore();
+  });
+  for(let k=0;k<30;k++){
+    const a = k/30*Math.PI*2;
+    ctx.beginPath(); ctx.arc(Math.cos(a)*R*0.965, Math.sin(a)*R*0.965, W*0.008, 0, Math.PI*2);
+    ctx.fillStyle = k%2 ? "#e9b649" : "#f4efe4"; ctx.fill();
+  }
+  ctx.rotate(-rotation*Math.PI/180);
+  ctx.beginPath(); ctx.arc(0,0,R*0.17,0,Math.PI*2); ctx.fillStyle="#0e2620"; ctx.fill();
+  ctx.lineWidth=W*0.008; ctx.strokeStyle="#e9b649"; ctx.stroke();
+  ctx.beginPath();
+  for(let i=0;i<10;i++){ const rad=i%2?R*0.042:R*0.1, a=-Math.PI/2+i*Math.PI/5; ctx.lineTo(Math.cos(a)*rad, Math.sin(a)*rad); }
+  ctx.closePath(); ctx.fillStyle="#e9b649"; ctx.fill();
+}
+
+/* ---------- logic ---------- */
+function counts(){ const c = SCENES.map(()=>0); records.forEach(r=>{ const i=sceneIndex(r.scene); if(i>=0) c[i]++; }); return c; }
+function chooseScene(){
+  if(!$("balanced").checked) return Math.floor(Math.random()*SCENES.length);
+  const c = counts(), cap = Math.ceil(TOTAL/SCENES.length);
+  const ok = SCENES.map((_,i)=>i).filter(i=>c[i]<cap);
+  const pool = ok.length ? ok : SCENES.map((_,i)=>i);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function samplePicks(si, n=4){
+  const idx = SCENES[si].gifts.map((_,i)=>i);
+  for(let i=idx.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; }
+  return idx.slice(0,n);
+}
+const hasSpun = name => records.some(r=>norm(r.name)===norm(name));
+
+function spin(){
+  if(spinning || !player) return;
+  const mine = myRecord(); if(mine){ showMine(mine); return; }
+  if(hasSpun(player)){ renderAsk(`${player} 已經轉過了。要重轉的話請找主辦人。`); return; }
+  spinning = true; $("spin").disabled = true;
+  const si = chooseScene();
+  const slots = SLICES.map((s,i)=>s===si?i:-1).filter(i=>i>=0);
+  const slot = slots[Math.floor(Math.random()*slots.length)];
+  const theta = slot*SEG + SEG*(0.15 + Math.random()*0.7);
+  const cur = ((rotation%360)+360)%360;
+  const delta = ((-theta - cur)%360 + 720)%360;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const start = rotation, end = rotation + (reduce?360:360*6) + delta;
+  const dur = reduce ? 900 : 5200, t0 = performance.now();
+  const name = player;
+  $("card").className = "card";
+  $("card").innerHTML = `<div class="step">轉動中</div><h2>${esc(name)}，看會停在哪裡</h2>`;
+  function frame(now){
+    const t = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-t,4);
+    rotation = start + (end-start)*e; draw();
+    if(t<1){ requestAnimationFrame(frame); return; }
+    rotation = end % 360; draw();
+    spinning = false;
+    lastResult = { name, si, picks: samplePicks(si), saved: "saving" };
+    renderResult();
+    record(name, si);
+  }
+  requestAnimationFrame(frame);
+}
+
+async function record(name, si){
+  if(!spinsCol){ lastResult.saved = "local"; renderResult(); return; }
+  try{
+    const body = { name, scene: SCENES[si].key, at: Date.now() };
+    if(myId) body.uid = myId;
+    const ref = await spinsCol.add(body);
+    lsSet({ id: ref.id, picks: lastResult.picks });
+    lastResult.saved = "ok"; mineShown = true;
+  }catch(e){
+    lastResult.saved = "fail";
+  }
+  if(lastResult && lastResult.name===name) renderResult();
+}
+
+/* ---------- render ---------- */
+function renderAsk(err){
+  player = null; lastResult = null;
+  $("spin").disabled = true;
+  $("turn").innerHTML = "請先輸入你的名字";
+  const done = records.length >= TOTAL;
+  const card = $("card"); card.className = "card"; card.style.removeProperty("--scene-c");
+  card.innerHTML = `<div class="step">第 1 步</div>
+    <h2>${done ? "7 個人都轉完了" : "你是誰？"}</h2>
+    <p class="desc">${done ? "所有人都抽好場景了，祝大家挑禮物愉快。" : "輸入你的名字，再按「轉！」。每個人只能轉一次。"}</p>
+    <form class="who-form" id="whoForm" ${done?"hidden":""}>
+      <input id="whoName" autocomplete="off" maxlength="20" placeholder="例如：小美" aria-label="你的名字">
+      <button class="btn btn-light" type="submit">就是我</button>
+    </form>
+    ${err ? `<p class="err">${esc(err)}</p>` : ""}`;
+  const f = $("whoForm");
+  f.addEventListener("submit", e=>{
+    e.preventDefault();
+    const v = $("whoName").value.trim().replace(/\s+/g," ");
+    if(!v){ renderAsk("請輸入名字。"); return; }
+    if(hasSpun(v)){ renderAsk(`${v} 已經轉過了。要重轉的話請找主辦人。`); return; }
+    player = v;
+    $("turn").innerHTML = `輪到 <span>${esc(v)}</span>`;
+    $("spin").disabled = false;
+    card.innerHTML = `<div class="step">第 2 步</div><h2>${esc(v)}，準備好了</h2>
+      <p class="desc">按「轉！」開始。</p>
+      <div class="actions"><button class="btn" id="notMe">不是我，重新輸入</button></div>`;
+    $("notMe").onclick = ()=>renderAsk();
+    $("spin").focus();
+  });
+}
+
+function pickHTML(g){ return `<li class="pick"><b>${esc(g[0])}</b><span class="price">${g[1]}</span><span class="why">${esc(g[2])}</span></li>`; }
+
+function renderResult(){
+  const r = lastResult; if(!r) return;
+  const sc = SCENES[r.si], card = $("card");
+  card.className = "card result"; card.style.setProperty("--scene-c", sc.color);
+  const savedMsg = { saving:"記錄中…", ok:"已記錄。之後再打開這頁，一樣看得到你的場景。", fail:"沒有記錄成功，請告訴主辦人你抽到的場景。", local:"目前連不到共用紀錄，這次結果沒有被記錄，請告訴主辦人。" }[r.saved];
+  card.innerHTML = `<div class="step">${r.returning ? `${esc(r.name)}，你已經轉過了，你的場景是` : `${esc(r.name)} 抽到`}</div>
+    <h2><span>${sc.name}</span>場景</h2>
+    <p class="desc">${sc.desc}預算 NT$500 以上。推薦你：</p>
+    <ul class="picks">${r.picks.map(i=>pickHTML(sc.gifts[i])).join("")}</ul>
+    <div class="actions">
+      <button class="btn btn-light" id="reroll">換一批推薦</button>
+      <button class="btn" id="seeAll">看全部點子</button>
+    </div>
+    <div class="saved">${savedMsg}</div>`;
+  $("turn").innerHTML = `${esc(r.name)} 抽到 <span>${sc.name}</span>`;
+  $("reroll").onclick = ()=>{
+    r.picks = samplePicks(r.si);
+    const local = lsGet(); if(local) lsSet({ ...local, picks: r.picks });
+    renderResult();
+  };
+  $("seeAll").onclick = ()=>{ catTab = r.si; renderCatalog(); document.querySelector(".catalog").scrollIntoView({behavior:"smooth"}); };
+}
+
+function renderRoster(){
+  $("count").textContent = `${records.length} / ${TOTAL}`;
+  const sorted = [...records].sort((a,b)=>(a.at||0)-(b.at||0));
+  const ul = $("names"); ul.innerHTML = "";
+  sorted.forEach(r=>{ const li=document.createElement("li"); li.textContent = r.name; ul.appendChild(li); });
+  for(let i=records.length;i<TOTAL;i++){ const li=document.createElement("li"); li.className="wait"; li.textContent="還沒轉"; ul.appendChild(li); }
+}
+
+function renderHost(){
+  $("host").hidden = !isOwner;
+  if(!isOwner) return;
+  const c = counts();
+  $("tally").innerHTML = SCENES.map((s,i)=>`<span><i style="background:${s.color}"></i>${s.name} ${c[i]}</span>`).join("");
+  const sorted = [...records].sort((a,b)=>(a.at||0)-(b.at||0));
+  const tb = $("rows"); tb.innerHTML = "";
+  if(!sorted.length){ tb.innerHTML = `<tr><td colspan="4" style="color:var(--frost)">還沒有人轉。第一個人轉完就會出現在這裡。</td></tr>`; return; }
+  sorted.forEach(r=>{
+    const tr = document.createElement("tr");
+    const si = sceneIndex(r.scene);
+    const time = r.at ? new Date(r.at).toLocaleString("zh-TW",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}) : "";
+    tr.innerHTML = `<td></td><td>${si>=0?SCENES[si].name:esc(r.scene)}</td><td class="t">${time}</td><td><button class="btn" style="padding:3px 12px;font-size:13px">刪除</button></td>`;
+    tr.firstChild.textContent = r.name;
+    const b = tr.querySelector("button"); let armed = false;
+    b.onclick = async ()=>{
+      if(!armed){ armed = true; b.textContent = "確定刪除？"; b.style.borderColor="var(--berry)"; setTimeout(()=>{ armed=false; b.textContent="刪除"; b.style.borderColor=""; },4000); return; }
+      b.disabled = true;
+      try{ await spinsCol.doc(r.id).delete(); }catch(e){ b.disabled=false; b.textContent="刪除失敗，再試一次"; }
+    };
+    tb.appendChild(tr);
+  });
+}
+
+function renderCatalog(){
+  $("tabs").innerHTML = SCENES.map((s,i)=>`<button class="btn tab" role="tab" id="tab-${s.key}" aria-selected="${i===catTab}">${s.name}</button>`).join("");
+  [...$("tabs").children].forEach((b,i)=>b.onclick=()=>{ catTab=i; renderCatalog(); });
+  $("grid").innerHTML = SCENES[catTab].gifts.map(g=>pickHTML(g).replace(/^<li/,"<div").replace(/<\/li>$/,"</div>")).join("");
+}
+
+/* ---------- boot ---------- */
+$("spin").onclick = spin;
+window.addEventListener("resize", sizeCanvas);
+renderCatalog(); renderRoster(); renderAsk();
+sizeCanvas();
+if(document.fonts) document.fonts.ready.then(draw);
+
+(async ()=>{
+  const timer = setTimeout(()=>{ if(!dbReady) note("正在連線到共用紀錄，可能需要一點時間。轉盤還是可以先用。"); }, 10000);
+  try{
+    const user = await window.claude?.use?.("user");
+    isOwner = user ? await user.isOwner() : false;
+    myId = user ? await user.id() : null;
+    db = await window.claude?.use?.("db");
+  }catch(e){ db = null; }
+  if(!db){
+    clearTimeout(timer);
+    note("目前連不到共用紀錄（可能沒有登入，或沒有這頁的使用權限）。轉盤可以用，但結果不會被記錄。");
+    renderHost(); return;
+  }
+  spinsCol = db.collection("spins");
+  spinsCol.onSnapshot(snap=>{
+    records = snap.docs.map(d=>{ const x=d.data()||{}; return { id:d.id, name:String(x.name||""), scene:String(x.scene||""), at:Number(x.at)||0, uid: x.uid ? String(x.uid) : null }; });
+    if(!snap.metadata.fromCache){ dbReady = true; clearTimeout(timer); note(""); }
+    renderRoster(); renderHost();
+    if(spinning || (lastResult && lastResult.saved==="saving")) return;
+    const mine = myRecord();
+    if(mine && !mineShown) showMine(mine);
+    else if(!mine && mineShown){ mineShown = false; player = null; lastResult = null; renderAsk(); }  // host deleted it: allow a re-spin
+    else if(!player && !lastResult) renderAsk();
+  }, err=>{
+    clearTimeout(timer);
+    note("共用紀錄連線中斷，重新整理頁面再試一次。");
+  });
+})();
+</script>
