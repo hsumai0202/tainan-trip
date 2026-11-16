@@ -1,18 +1,24 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>聖誕交換禮物場景轉盤</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
 /* Layout: wheel on the left; "who are you" → result → roster on the right; owner records + gift catalogue below. Single deliberate night-pine look. */
 :root{
   --pine:#0e2620; --pine-2:#163a30; --pine-3:#1f4b3e;
   --snow:#f4efe4; --frost:#a9c2b6; --gold:#e9b649; --berry:#c73a45; --berry-soft:#3a1d22;
-  --display:"LXGW WenKai TC","Kaiti TC","STKaiti","Noto Serif TC",serif;
+  --display:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+html,body{margin:0}
+[hidden]{display:none!important}
 body{
   background:var(--pine);color:var(--snow);font-family:var(--body);font-size:15px;line-height:1.6;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
@@ -23,7 +29,7 @@ body{
 .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
 header{display:flex;flex-direction:column;gap:6px}
 .eyebrow{font-size:12px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:900;letter-spacing:.02em;font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0;text-wrap:balance}
 h1 em{font-style:normal;color:var(--gold)}
 .lede{color:var(--frost);margin:0;max-width:62ch}
 .rules{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
@@ -103,6 +109,8 @@ td.t{font-variant-numeric:tabular-nums;color:var(--frost)}
 footer{color:var(--frost);font-size:13px;text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header>
@@ -144,7 +152,7 @@ footer{color:var(--frost);font-size:13px;text-align:center}
 
   <section class="host" id="host" hidden>
     <h2>主辦人紀錄</h2>
-    <p>只有你（這頁的擁有者）看得到這一區。有人要重轉，在這裡刪掉他的紀錄，他的頁面就會回到可以轉的狀態。</p>
+    <p>用主辦人網址打開才看得到這一區。有人要重轉，在這裡刪掉他的紀錄，他的頁面就會回到可以轉的狀態。</p>
     <div class="tally" id="tally"></div>
     <div class="table-wrap">
       <table>
@@ -161,10 +169,26 @@ footer{color:var(--frost);font-size:13px;text-align:center}
     <div class="grid" id="grid"></div>
   </section>
 
-  <footer>轉盤結果會記錄在這個頁面的共用紀錄裡。</footer>
+  <footer>轉盤結果會記錄在 Firebase 資料庫裡。</footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
+/* ===== 設定區：換成你自己的 Firebase 專案設定 =====
+   Firebase 主控台 → 專案設定 → 一般 → 你的應用程式 → SDK 設定（Config） */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+const COLLECTION = "xmasSpins";   // Firestore 集合名稱，跟其他 App 分開
+const HOST_KEY = "santa2026";     // 主辦人密語：用「網址#host-santa2026」打開才看得到紀錄，請自行改掉
+/* ===== 設定區結束 ===== */
+
 const TOTAL = 7;
 const SCENES = [
   { key:"kitchen", name:"廚房", label:["廚房"], color:"#c73a45", text:"#fff6ee",
@@ -297,7 +321,7 @@ function draw(){
     ctx.save(); ctx.rotate((a0+a1)/2);
     ctx.fillStyle = sc.text; ctx.textAlign="right"; ctx.textBaseline="middle";
     const lines = sc.label, fs = (lines.length>1 ? 0.046 : 0.06)*W;
-    ctx.font = `700 ${fs}px "LXGW WenKai TC","Noto Sans TC",serif`;
+    ctx.font = `700 ${fs}px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
     lines.forEach((t,k)=>ctx.fillText(t, r*0.9, (k-(lines.length-1)/2)*fs*1.1));
     ctx.restore();
   });
@@ -477,19 +501,22 @@ sizeCanvas();
 if(document.fonts) document.fonts.ready.then(draw);
 
 (async ()=>{
+  // 主辦人：用「網址#host-主辦人密語」打開才看得到紀錄
+  const checkHost = ()=>{ isOwner = !!HOST_KEY && location.hash === "#host-" + HOST_KEY; renderHost(); };
+  window.addEventListener("hashchange", checkHost);
+  checkHost();
   const timer = setTimeout(()=>{ if(!dbReady) note("正在連線到共用紀錄，可能需要一點時間。轉盤還是可以先用。"); }, 10000);
   try{
-    const user = await window.claude?.use?.("user");
-    isOwner = user ? await user.isOwner() : false;
-    myId = user ? await user.id() : null;
-    db = await window.claude?.use?.("db");
+    if(!window.firebase || !firebaseConfig.projectId || firebaseConfig.projectId.startsWith("YOUR_")) throw new Error("no config");
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
   }catch(e){ db = null; }
   if(!db){
     clearTimeout(timer);
-    note("目前連不到共用紀錄（可能沒有登入，或沒有這頁的使用權限）。轉盤可以用，但結果不會被記錄。");
-    renderHost(); return;
+    note("還沒設定 Firebase，或連不到資料庫。轉盤可以用，但結果不會被記錄。");
+    return;
   }
-  spinsCol = db.collection("spins");
+  spinsCol = db.collection(COLLECTION);
   spinsCol.onSnapshot(snap=>{
     records = snap.docs.map(d=>{ const x=d.data()||{}; return { id:d.id, name:String(x.name||""), scene:String(x.scene||""), at:Number(x.at)||0, uid: x.uid ? String(x.uid) : null }; });
     if(!snap.metadata.fromCache){ dbReady = true; clearTimeout(timer); note(""); }
@@ -501,7 +528,11 @@ if(document.fonts) document.fonts.ready.then(draw);
     else if(!player && !lastResult) renderAsk();
   }, err=>{
     clearTimeout(timer);
-    note("共用紀錄連線中斷，重新整理頁面再試一次。");
+    note(err && err.code==="permission-denied"
+      ? "Firebase 拒絕讀取，請檢查 Firestore 安全規則。"
+      : "共用紀錄連線中斷，重新整理頁面再試一次。");
   });
 })();
 </script>
+</body>
+</html>
